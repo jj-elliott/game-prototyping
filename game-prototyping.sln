@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-prototyping.Editor", "game-prototyping.Editor.csproj", "{A923CCC2-9F5C-E261-641E-14C504877312}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game-prototyping.Editor", "game-prototyping.Editor.csproj", "{A923CCC2-9F5C-E261-641E-14C504877312}"
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{3980F92C-9310-AD9A-649E-EE0CE8672EF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +9,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{A923CCC2-9F5C-E261-641E-14C504877312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A923CCC2-9F5C-E261-641E-14C504877312}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A923CCC2-9F5C-E261-641E-14C504877312}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A923CCC2-9F5C-E261-641E-14C504877312}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A923CCC2-9F5C-E261-641E-14C504877312}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A923CCC2-9F5C-E261-641E-14C504877312}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A923CCC2-9F5C-E261-641E-14C504877312}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A923CCC2-9F5C-E261-641E-14C504877312}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3980F92C-9310-AD9A-649E-EE0CE8672EF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3980F92C-9310-AD9A-649E-EE0CE8672EF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3980F92C-9310-AD9A-649E-EE0CE8672EF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3980F92C-9310-AD9A-649E-EE0CE8672EF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
