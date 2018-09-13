@@ -3168,6 +3168,11 @@ Prefab:
       propertyPath: OnDeselected.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 54692827467984974, guid: d7bed07293e6e1d4ba255846f7cbd2a6,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7bed07293e6e1d4ba255846f7cbd2a6, type: 2}
   m_IsPrefabAsset: 0
@@ -3338,6 +3343,11 @@ Prefab:
       propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1355826552}
+    - target: {fileID: 54487456905786140, guid: 4aa92bef5ef254b4aa48e1435c2f7823,
+        type: 2}
+      propertyPath: m_Constraints
+      value: 126
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4aa92bef5ef254b4aa48e1435c2f7823, type: 2}
   m_IsPrefabAsset: 0

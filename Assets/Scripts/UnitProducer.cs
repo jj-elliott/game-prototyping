@@ -6,18 +6,20 @@ using UnityEngine.Events;
 [System.Serializable]
 public class OnBuildProgressEvent : UnityEvent<float> { };
 public class UnitProducer : UnitBase {
-
-    public float buildTime;
+    [SerializeField]
+    public float[] buildTime;
     float buildProgress;
     public Transform spawnLocation;
-    public GameObject unitPrefab;
+    [SerializeField]
+    public GameObject[] unitPrefab;
     public OnBuildProgressEvent OnBuildProgress;
+    public int activeUnit = 0;
 
     protected override void Update()
     {
         base.Update();
 
-        buildProgress += Time.deltaTime / buildTime;
+        buildProgress += Time.deltaTime / buildTime[activeUnit];
         buildProgress = Mathf.Clamp01(buildProgress);
 
         if(OnBuildProgress != null)
@@ -29,13 +31,30 @@ public class UnitProducer : UnitBase {
         {
             buildProgress = 0;
             SpawnUnit();
-
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            activeUnit = 0;
+            buildProgress = 0;
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            activeUnit = 1;
+            buildProgress = 0;
+        }
+        else if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            activeUnit = 2;
+            buildProgress = 0;
+        }
+
+
     }
 
     void SpawnUnit()
     {
-        Selectable spawned = Instantiate(unitPrefab, spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
+        Selectable spawned = Instantiate(unitPrefab[activeUnit], spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
         spawned.Start();
         spawned.SetOrder(new MoveOrder(this.meshAgent.destination));
     }
