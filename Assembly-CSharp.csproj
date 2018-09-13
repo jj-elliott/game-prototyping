@@ -67,8 +67,10 @@
     <Compile Include="Assets\Scripts\CameraUI.cs" />
     <Compile Include="Assets\Scripts\ControlTower.cs" />
     <Compile Include="Assets\Scripts\FaceCamera.cs" />
+    <Compile Include="Assets\Scripts\FastUnit.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GameOverManager.cs" />
+    <Compile Include="Assets\Scripts\HeavyUnit.cs" />
     <Compile Include="Assets\Scripts\LightUnit.cs" />
     <Compile Include="Assets\Scripts\MoveOrder.cs" />
     <Compile Include="Assets\Scripts\Order.cs" />

@@ -10,7 +10,7 @@ public abstract class UnitBase : Selectable
     public static List<UnitBase> Units;
 
 	// Use this for initialization
-	protected override void Start ()
+	public override void Start ()
     {
         base.Start();
 

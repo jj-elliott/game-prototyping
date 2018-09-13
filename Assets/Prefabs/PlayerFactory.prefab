@@ -28,7 +28,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1405737710893708
 GameObject:
@@ -44,12 +44,13 @@ GameObject:
   - component: {fileID: 114618407877212808}
   - component: {fileID: 114582690215764400}
   - component: {fileID: 195482081449180036}
+  - component: {fileID: 54692827467984974}
   m_Layer: 0
   m_Name: PlayerFactory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1565610683774398
 GameObject:
@@ -66,7 +67,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1630219509422694
 GameObject:
@@ -85,7 +86,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1754266451524694
 GameObject:
@@ -102,7 +103,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!1 &1863769141873394
 GameObject:
@@ -117,7 +118,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4705157495089482
 Transform:
@@ -190,6 +191,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1405737710893708}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54692827467984974
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1405737710893708}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &65920610286051682
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -384,9 +400,15 @@ MonoBehaviour:
   meshAgent: {fileID: 0}
   TeamIndex: 0
   unitWeapon: {fileID: 0}
-  buildTime: 5
+  buildTime:
+  - 1
+  - 3
+  - 5
   spawnLocation: {fileID: 4705157495089482}
-  unitPrefab: {fileID: 1771509390771818, guid: e7dbcf5e49da4aa4fa418b0f1fbd35db, type: 2}
+  unitPrefab:
+  - {fileID: 1771509390771818, guid: c564c675400584ea0ac4d26a2aa5bc64, type: 2}
+  - {fileID: 1771509390771818, guid: e7dbcf5e49da4aa4fa418b0f1fbd35db, type: 2}
+  - {fileID: 1771509390771818, guid: 762d570b10e0544df9b4f4c817a93b4e, type: 2}
   OnBuildProgress:
     m_PersistentCalls:
       m_Calls:
@@ -403,6 +425,7 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: OnBuildProgressEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
+  activeUnit: 0
 --- !u!114 &114624635584439974
 MonoBehaviour:
   m_ObjectHideFlags: 1
