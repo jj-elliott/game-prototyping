@@ -309,7 +309,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cd514324ef4a48739abae9ef3a30972, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0.1
+  TeamIndex: 0
   OnSelected:
     m_PersistentCalls:
       m_Calls:
@@ -343,8 +343,8 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   meshAgent: {fileID: 0}
-  TeamIndex: 0
-  unitWeapon: {fileID: 0}
+  MovementSpeed: 0
+  UnitWeapon: {fileID: 0}
 --- !u!114 &114684125307759700
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -361,7 +361,7 @@ MonoBehaviour:
   ProjectilePrefab: {fileID: 1523255989571376, guid: e3dcd3143b2f745889adff71ce6a36cf,
     type: 2}
   unit: {fileID: 0}
-  LaunchForce: 50000
+  LaunchForce: 1000
   CooldownTime: 0.25
 --- !u!114 &114721934175275954
 MonoBehaviour:
