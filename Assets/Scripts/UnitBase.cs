@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 public abstract class UnitBase : Selectable
 {
-    public UnitWeapon unitWeapon;
+    public float MovementSpeed;
+    public UnitWeapon UnitWeapon;
     private Transform weaponTarget;
+
+    public static List<UnitBase> Units;
+
 	// Use this for initialization
 	protected override void Start ()
     {
         base.Start();
+
+        if (Units == null)
+        {
+            Units = new List<UnitBase>();
+        }
+
+        Units.Add(this);
 	}
 	
 	// Update is called once per frame
@@ -16,6 +27,12 @@ public abstract class UnitBase : Selectable
     {
         base.Update();
 	}
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        Units.Remove(this);
+    }
 
     public virtual Transform GetWeaponTarget()
     {

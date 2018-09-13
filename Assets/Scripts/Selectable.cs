@@ -6,12 +6,11 @@ using UnityEngine.AI;
 
 public class Selectable : MonoBehaviour {
 
-    public float movementSpeed = 0.1f;
+    public int TeamIndex;
     Queue<Order> orderQueue;
     public UnityEvent OnSelected, OnDeselected;
     public NavMeshAgent meshAgent;
     public bool idle { get { return orderQueue.Count == 0; } }
-    public int TeamIndex;
 
     // Use this for initialization
     protected virtual void Start () {
@@ -33,6 +32,11 @@ public class Selectable : MonoBehaviour {
             }
         }
 	}
+
+    protected virtual void OnDestroy()
+    {
+
+    }
 
     public void SetNavTarget(Vector3 targetPos)
     {
