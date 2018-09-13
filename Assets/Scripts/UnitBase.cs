@@ -6,7 +6,7 @@ public abstract class UnitBase : Selectable
     public UnitWeapon unitWeapon;
     private Transform weaponTarget;
 	// Use this for initialization
-	protected override void Start ()
+	public override void Start ()
     {
         base.Start();
 	}

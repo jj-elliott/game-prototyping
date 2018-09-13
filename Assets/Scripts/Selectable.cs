@@ -14,8 +14,11 @@ public class Selectable : MonoBehaviour {
     public int TeamIndex;
 
     // Use this for initialization
-    protected virtual void Start () {
-        orderQueue = new Queue<Order>();
+    public virtual void Start () {
+        if (orderQueue == null)
+        {
+            orderQueue = new Queue<Order>();
+        }
         meshAgent = GetComponent<NavMeshAgent>();
 	}
 

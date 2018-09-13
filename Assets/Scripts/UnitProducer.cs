@@ -27,13 +27,16 @@ public class UnitProducer : UnitBase {
 
         if(buildProgress == 1)
         {
-            SpawnUnit();
             buildProgress = 0;
+            SpawnUnit();
+
         }
     }
 
     void SpawnUnit()
     {
-        Instantiate(unitPrefab, spawnLocation.position, Quaternion.identity);
+        Selectable spawned = Instantiate(unitPrefab, spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
+        spawned.Start();
+        spawned.SetOrder(new MoveOrder(this.meshAgent.destination));
     }
 }
