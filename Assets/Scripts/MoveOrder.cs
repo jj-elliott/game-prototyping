@@ -23,10 +23,7 @@ public class MoveOrder : Order
 
     public override void Step(Selectable sel)
     {
-        Vector3 vecToTarget = targetLocation - sel.transform.position;
-        float distToTarget = vecToTarget.magnitude;
-        vecToTarget = vecToTarget.normalized;
-
-        sel.transform.position += vecToTarget * Mathf.Min(distToTarget, sel.movementSpeed);
+        //TODO: This is probably inneficient b/c we recalculate route every frame
+        sel.SetNavTarget(targetLocation);
     }
 }

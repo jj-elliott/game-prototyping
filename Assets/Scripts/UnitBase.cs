@@ -1,23 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public abstract class UnitBase : MonoBehaviour
+public abstract class UnitBase : Selectable
 {
+    public UnitWeapon unitWeapon;
+    private Transform weaponTarget;
 	// Use this for initialization
-	void Start ()
+	protected override void Start ()
     {
-		
+        base.Start();
 	}
 	
 	// Update is called once per frame
-	void Update ()
+	protected override void Update ()
     {
-		
+        base.Update();
 	}
 
     public virtual Transform GetWeaponTarget()
     {
-        return gameObject.transform;
+        return weaponTarget;
+    }
+
+    public void SetWeaponTarget(Transform target)
+    {
+        weaponTarget = target;
     }
 }

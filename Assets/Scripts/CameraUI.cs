@@ -26,7 +26,7 @@ public class CameraUI : MonoBehaviour {
         {
             Selectable sel = hit.transform.GetComponent<Selectable>(); // Ask unity if this thing has a selectable component on it
 
-            if (sel != null)
+            if (sel != null && sel.TeamIndex == SelectionManager.instance.TeamIndex)
             {
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 {
@@ -51,15 +51,30 @@ public class CameraUI : MonoBehaviour {
         Physics.Raycast(ray, out hit);
 
 
-        if (hit.transform != null && hit.transform.CompareTag("Terrain")) // We hit somewhere we can move to
+        if (hit.transform != null)
         {
-            if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+            UnitBase unit = hit.transform.gameObject.GetComponent<UnitBase>();
+
+            if (hit.transform.CompareTag("Terrain")) // We hit somewhere we can move to
             {
-                SelectionManager.instance.AddOrder(new MoveOrder(hit.point));
-            }
-            else
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                {
+                    SelectionManager.instance.AddOrder(new MoveOrder(hit.point));
+                }
+                else
+                {
+                    SelectionManager.instance.IssueOrder(new MoveOrder(hit.point));
+                }
+            } else if(unit != null && unit.TeamIndex != SelectionManager.instance.TeamIndex)
             {
-                SelectionManager.instance.IssueOrder(new MoveOrder(hit.point));
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                {
+                    SelectionManager.instance.AddOrder(new AttackOrder(hit.transform));
+                }
+                else
+                {
+                    SelectionManager.instance.IssueOrder(new AttackOrder(hit.transform));
+                }
             }
         }
     }

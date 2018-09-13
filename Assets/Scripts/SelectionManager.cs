@@ -6,6 +6,7 @@ public class SelectionManager : MonoBehaviour {
 
     public static SelectionManager instance;
     List<Selectable> currentSelection;
+    public int TeamIndex;
 
 	// Use this for initialization
 	void Start () {

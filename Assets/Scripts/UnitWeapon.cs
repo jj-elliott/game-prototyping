@@ -5,13 +5,13 @@ using UnityEngine;
 public abstract class UnitWeapon : MonoBehaviour
 {
     [SerializeField]
-    protected float MaxRange;
+    public float MaxRange;
 
     [SerializeField]
-    protected float MinRange;
+    public float MinRange;
 
     [SerializeField]
-    protected float Damage;
+    protected GameObject ProjectilePrefab;
 
     [SerializeField]
     protected UnitBase unit;
