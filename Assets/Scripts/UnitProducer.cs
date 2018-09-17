@@ -25,7 +25,7 @@ public class UnitProducer : UnitBase {
         {
             if (tower.TeamIndex == TeamIndex)
             {
-                buildBonus *= 10.0f;
+                buildBonus *= tower.BuildBonus;
             }
         }
 

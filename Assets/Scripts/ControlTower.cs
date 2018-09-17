@@ -4,8 +4,17 @@ using UnityEngine;
 
 public class ControlTower : MonoBehaviour
 {
-    public float CaptureRange;
+    [SerializeField]
+    private float CaptureRange;
+    [SerializeField]
+    private Material TeamOneMaterial;
+    [SerializeField]
+    private Material TeamTwoMaterial;
+
+    private Material DefaultMaterial;
+
     public int TeamIndex;
+    public float BuildBonus;
 
     public static List<ControlTower> Towers;
 
@@ -18,6 +27,8 @@ public class ControlTower : MonoBehaviour
         }
 
         Towers.Add(this);
+
+        DefaultMaterial = gameObject.GetComponent<Renderer>().material;
     }
 
     // Update is called once per frame
@@ -48,14 +59,17 @@ public class ControlTower : MonoBehaviour
         if (teamOneUnits > teamTwoUnits)
         {
             TeamIndex = 0;
+            gameObject.GetComponent<Renderer>().material = TeamOneMaterial;
         }
         else if (teamOneUnits < teamTwoUnits)
         {
             TeamIndex = 1;
+            gameObject.GetComponent<Renderer>().material = TeamTwoMaterial;
         }
         else
         {
             TeamIndex = -1;
+            gameObject.GetComponent<Renderer>().material = DefaultMaterial;
         }
     }
 
