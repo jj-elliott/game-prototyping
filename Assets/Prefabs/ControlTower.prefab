@@ -109,7 +109,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CaptureRange: 10
-  TeamIndex: -1
-  DefaultMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   TeamOneMaterial: {fileID: 2100000, guid: 0e83507a7014b35409a6690c872bcef4, type: 2}
   TeamTwoMaterial: {fileID: 2100000, guid: 3a911a47b6db56243bfe31c99e57a92c, type: 2}
+  TeamIndex: -1
+  BuildBonus: 2
