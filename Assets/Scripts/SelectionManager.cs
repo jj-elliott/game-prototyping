@@ -6,6 +6,7 @@ public class SelectionManager : MonoBehaviour {
 
     public static SelectionManager instance;
     List<Selectable> currentSelection;
+    Dictionary<int, List<Selectable>> teamUnits;
     public int TeamIndex;
 
 	// Use this for initialization
@@ -14,7 +15,7 @@ public class SelectionManager : MonoBehaviour {
         {
             instance = this;
             currentSelection = new List<Selectable>();
-
+            teamUnits = new Dictionary<int, List<Selectable>>();
         }
         else
         {
@@ -22,6 +23,19 @@ public class SelectionManager : MonoBehaviour {
         }
 	}
 	
+    public void RegisterUnit(Selectable s)
+    {
+        if(!teamUnits.ContainsKey(s.TeamIndex))
+        {
+            teamUnits[s.TeamIndex] = new List<Selectable>();
+        }
+        teamUnits[s.TeamIndex].Add(s);
+    }
+
+    public void UnRegisterUnit(Selectable s)
+    {
+        teamUnits[s.TeamIndex].Remove(s);
+    }
 	// Update is called once per frame
 	void Update () {
 		

@@ -19,6 +19,7 @@ public class Selectable : MonoBehaviour {
             orderQueue = new Queue<Order>();
         }
         meshAgent = GetComponent<NavMeshAgent>();
+        SelectionManager.instance.AddSelection(this);
 	}
 
     // Update is called once per frame
@@ -38,7 +39,7 @@ public class Selectable : MonoBehaviour {
 
     protected virtual void OnDestroy()
     {
-
+        SelectionManager.instance.UnRegisterUnit(this);
     }
 
     public void SetNavTarget(Vector3 targetPos)
