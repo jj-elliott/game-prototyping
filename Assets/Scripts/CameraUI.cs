@@ -1,13 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraUI : MonoBehaviour {
 
     Camera camera;
-
-	// Use this for initialization
-	void Start () {
+    Vector2 clickStartPos;
+    public float dragThreshold = 5;
+    // Use this for initialization
+    void Start () {
         camera = GetComponent<Camera>();	
 	}
 	
@@ -17,7 +19,7 @@ public class CameraUI : MonoBehaviour {
 
         RaycastHit hit;
         Ray ray = camera.ScreenPointToRay(Input.mousePosition);
-
+        
         // Perform the raycast, and store info about the result in the hit
         Physics.Raycast(ray, out hit);
 
@@ -36,6 +38,29 @@ public class CameraUI : MonoBehaviour {
                 {
                     SelectionManager.instance.SetSelection(sel);
                 }
+            } else
+            {
+                SelectionManager.instance.ClearSelection();
+            }
+        }
+    }
+
+    void OnBoxSelect(Vector2 startPos , Vector2 endPos)
+    {
+        SelectionManager.instance.ClearSelection();
+
+        foreach(var unit in SelectionManager.instance.GetUnits(SelectionManager.instance.TeamIndex))
+        {
+            if(unit == null)
+            {
+                continue;
+            }
+            Vector3 screenPos = camera.WorldToScreenPoint(unit.transform.position);
+
+            if(screenPos.z > 0 && screenPos.x > Mathf.Min(startPos.x , endPos.x) && screenPos.x < Mathf.Max(startPos.x, endPos.x) &&
+                screenPos.y > Mathf.Min(startPos.y, endPos.y) && screenPos.y < Mathf.Max(startPos.y, endPos.y))
+            {
+                SelectionManager.instance.AddSelection(unit);
             }
         }
     }
@@ -84,12 +109,39 @@ public class CameraUI : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(0)) // Did the player just click down the left mouse?
         {
-            OnLeftClick();
+            clickStartPos = Input.mousePosition;
         }
+
+        if (Input.GetMouseButtonUp(0)) // Did the player just click down the left mouse?
+        {
+            if(Vector2.Distance(clickStartPos , Input.mousePosition) > dragThreshold)
+            {
+                OnBoxSelect(clickStartPos, Input.mousePosition);
+            } else
+            {
+                OnLeftClick();
+            }
+        }
+
+        
 
         if (Input.GetMouseButtonDown(1)) // Did the player just click down the right mouse?
         {
             OnRightClick();
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (Input.GetMouseButton(0) && Vector2.Distance(clickStartPos, Input.mousePosition) > dragThreshold)
+        {
+            Rect r = new Rect();
+            r.xMin = Mathf.Min(clickStartPos.x, Input.mousePosition.x);
+            r.xMax = Mathf.Max(clickStartPos.x, Input.mousePosition.x);
+            r.yMin = Screen.height - Mathf.Min(clickStartPos.y, Input.mousePosition.y);
+            r.yMax = Screen.height - Mathf.Max(clickStartPos.y, Input.mousePosition.y);
+
+            Utils.DrawScreenRect(r, Color.green - new Color(0, 0, 0, 0.75f));
         }
     }
 }

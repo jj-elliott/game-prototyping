@@ -80,6 +80,8 @@ GameObject:
   - component: {fileID: 135515587786516364}
   - component: {fileID: 114794643603875786}
   - component: {fileID: 135684739757146092}
+  - component: {fileID: 114953573277776056}
+  - component: {fileID: 114035485754514908}
   m_Layer: 0
   m_Name: EnemyFastUnit
   m_TagString: Untagged
@@ -242,9 +244,20 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 0
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
+--- !u!114 &114035485754514908
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1922239885929232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed0f71047e83c6f45ab3f39756f53e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114230246808261276
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -399,7 +412,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c49ddea7313c4f93b6a44413d0c1165, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 0.1
+  TeamIndex: 1
   OnSelected:
     m_PersistentCalls:
       m_Calls:
@@ -433,8 +446,19 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   meshAgent: {fileID: 0}
-  TeamIndex: 1
-  unitWeapon: {fileID: 0}
+  MovementSpeed: 0
+  UnitWeapon: {fileID: 0}
+--- !u!114 &114953573277776056
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1922239885929232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed0f71047e83c6f45ab3f39756f53e5b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &135515587786516364
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -472,7 +496,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 240
-  m_StoppingDistance: 0
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

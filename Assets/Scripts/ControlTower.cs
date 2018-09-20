@@ -12,10 +12,13 @@ public class ControlTower : MonoBehaviour
     private Material TeamTwoMaterial;
 
     private Material DefaultMaterial;
+    LineRenderer line;
 
     public int TeamIndex;
     public float BuildBonus;
 
+    [SerializeField]
+    public Transform[] bases;
     public static List<ControlTower> Towers;
 
 	// Use this for initialization
@@ -29,6 +32,9 @@ public class ControlTower : MonoBehaviour
         Towers.Add(this);
 
         DefaultMaterial = gameObject.GetComponent<Renderer>().material;
+        line = GetComponent<LineRenderer>();
+        line.enabled = false;
+
     }
 
     // Update is called once per frame
@@ -60,16 +66,26 @@ public class ControlTower : MonoBehaviour
         {
             TeamIndex = 0;
             gameObject.GetComponent<Renderer>().material = TeamOneMaterial;
+            line.enabled = true;
+            line.startColor = line.endColor = Color.blue;
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, bases[0].transform.position);
         }
         else if (teamOneUnits < teamTwoUnits)
         {
             TeamIndex = 1;
             gameObject.GetComponent<Renderer>().material = TeamTwoMaterial;
+            line.enabled = true;
+            line.startColor = line.endColor = Color.red;
+            line.SetPosition(0, transform.position);
+            line.SetPosition(1, bases[1].transform.position);
         }
         else
         {
             TeamIndex = -1;
             gameObject.GetComponent<Renderer>().material = DefaultMaterial;
+            line.enabled = false;
+
         }
     }
 

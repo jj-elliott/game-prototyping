@@ -4,18 +4,25 @@ using UnityEngine;
 
 public class SelectionManager : MonoBehaviour {
 
-    public static SelectionManager instance;
+    public static SelectionManager instance { get { if (_instance != null) return _instance; else {FindObjectOfType<SelectionManager>().Init(); return _instance; } } }
+    static SelectionManager _instance;
     List<Selectable> currentSelection;
     Dictionary<int, List<Selectable>> teamUnits;
     public int TeamIndex;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+
+    private void Init()
+    {
+        _instance = this;
+        currentSelection = new List<Selectable>();
+        teamUnits = new Dictionary<int, List<Selectable>>();
+    }
+
+    void Start () {
         if(instance == null)
         {
-            instance = this;
-            currentSelection = new List<Selectable>();
-            teamUnits = new Dictionary<int, List<Selectable>>();
+            
         }
         else
         {
@@ -34,8 +41,19 @@ public class SelectionManager : MonoBehaviour {
 
     public void UnRegisterUnit(Selectable s)
     {
-        teamUnits[s.TeamIndex].Remove(s);
+        if (teamUnits[s.TeamIndex].Contains(s))
+            teamUnits[s.TeamIndex].Remove(s);
     }
+
+    public List<Selectable> GetUnits(int teamIndex)
+    {
+        if (!teamUnits.ContainsKey(teamIndex))
+        {
+            teamUnits[teamIndex] = new List<Selectable>();
+        }
+        return teamUnits[teamIndex];
+    }
+
 	// Update is called once per frame
 	void Update () {
 		

@@ -16,6 +16,7 @@ public class Projectile : MonoBehaviour {
 
     Collider col;
     Rigidbody rigid;
+    UnitCombat owner;
 
     private void Start()
     {
@@ -28,12 +29,19 @@ public class Projectile : MonoBehaviour {
         col.enabled = true;
     }
 
-    public void Fire(Vector3 force)
+    public void Fire(Vector3 force, UnitCombat owner)
     {
         col = GetComponent<Collider>();
         rigid = GetComponent<Rigidbody>();
+        this.owner = owner;
         col.enabled = false;
-        StartCoroutine(EnableCollider());
+        if (ArmingTime == 0)
+        {
+            col.enabled = true;
+        } else
+        {
+            StartCoroutine(EnableCollider());
+        }
         rigid.AddForce(force);
     }
 
@@ -41,6 +49,11 @@ public class Projectile : MonoBehaviour {
     {
         Transform hitObj = collision.transform;
         UnitCombat combat = hitObj.gameObject.GetComponent<UnitCombat>();
+
+        if(combat == owner)
+        {
+            return;
+        }
 
         if(combat != null)
         {

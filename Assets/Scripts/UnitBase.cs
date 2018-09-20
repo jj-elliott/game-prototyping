@@ -7,16 +7,16 @@ public abstract class UnitBase : Selectable
     public UnitWeapon UnitWeapon;
     private Transform weaponTarget;
 
-    public static List<UnitBase> Units;
-
-	// Use this for initialization
-	public override void Start ()
+    public static List<UnitBase> Units { get { if (_units != null) return _units; else { _units = new List<UnitBase>(); return _units; } } }
+    static List<UnitBase> _units;
+    // Use this for initialization
+    public override void Start ()
     {
         base.Start();
 
         if (Units == null)
         {
-            Units = new List<UnitBase>();
+            _units = new List<UnitBase>();
         }
 
         Units.Add(this);
@@ -30,8 +30,10 @@ public abstract class UnitBase : Selectable
 
     protected override void OnDestroy()
     {
-        base.OnDestroy();
         Units.Remove(this);
+        SelectionManager.instance.UnRegisterUnit(this);
+        base.OnDestroy();
+        
     }
 
     public virtual Transform GetWeaponTarget()
