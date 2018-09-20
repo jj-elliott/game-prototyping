@@ -3,22 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class CameraUI : MonoBehaviour {
 
     Camera camera;
     Vector2 clickStartPos;
     public float dragThreshold = 5;
+    UnityEngine.XR.WSA.Input.GestureRecognizer recognizer;
     // Use this for initialization
     void Start () {
-        camera = GetComponent<Camera>();	
-	}
+        camera = GetComponent<Camera>();
+        recognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
+        recognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
+        recognizer.TappedEvent += OnAirTap;
+        recognizer.StartCapturingGestures();
+    }
 	
-    void OnLeftClick()
+    void OnLeftClick(Ray ray)
     {
         // The general idea here is to preform a raycast from the camera and see if we hit anything we can select
 
         RaycastHit hit;
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
         
         // Perform the raycast, and store info about the result in the hit
         Physics.Raycast(ray, out hit);
@@ -45,6 +50,18 @@ public class CameraUI : MonoBehaviour {
         }
     }
 
+    void OnAirTap(UnityEngine.XR.WSA.Input.InteractionSourceKind source, int tapCount, Ray headRay)
+    {
+        print("Detected tap! " + tapCount);
+        if(tapCount == 1)
+        {
+            OnLeftClick(headRay);
+        } else
+        {
+            OnRightClick(headRay);
+        }
+    }
+
     void OnBoxSelect(Vector2 startPos , Vector2 endPos)
     {
         SelectionManager.instance.ClearSelection();
@@ -65,12 +82,11 @@ public class CameraUI : MonoBehaviour {
         }
     }
 
-    void OnRightClick()
+    void OnRightClick(Ray ray)
     {
         // The general idea here is to preform a raycast from the camera and see if we hit anything we can select
 
         RaycastHit hit;
-        Ray ray = camera.ScreenPointToRay(Input.mousePosition);
 
         // Perform the raycast, and store info about the result in the hit
         Physics.Raycast(ray, out hit);
@@ -119,7 +135,7 @@ public class CameraUI : MonoBehaviour {
                 OnBoxSelect(clickStartPos, Input.mousePosition);
             } else
             {
-                OnLeftClick();
+                OnLeftClick(camera.ScreenPointToRay(Input.mousePosition));
             }
         }
 
@@ -127,7 +143,7 @@ public class CameraUI : MonoBehaviour {
 
         if (Input.GetMouseButtonDown(1)) // Did the player just click down the right mouse?
         {
-            OnRightClick();
+            OnRightClick(camera.ScreenPointToRay(Input.mousePosition));
         }
     }
 
