@@ -30,10 +30,9 @@ public abstract class UnitBase : Selectable
 
     protected override void OnDestroy()
     {
-        Units.Remove(this);
-        SelectionManager.instance.UnRegisterUnit(this);
         base.OnDestroy();
-        
+        Units.Remove(this);
+        SelectionManager.instance.UnRegisterUnit(this); 
     }
 
     public virtual Transform GetWeaponTarget()
