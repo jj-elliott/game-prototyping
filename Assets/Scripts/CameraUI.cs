@@ -95,7 +95,7 @@ public class CameraUI : MonoBehaviour {
         if (hit.transform != null)
         {
             UnitBase unit = hit.transform.gameObject.GetComponent<UnitBase>();
-
+            UnitProducer prod = hit.transform.gameObject.GetComponent<UnitProducer>();
             if (hit.transform.CompareTag("Terrain")) // We hit somewhere we can move to
             {
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
@@ -106,7 +106,21 @@ public class CameraUI : MonoBehaviour {
                 {
                     SelectionManager.instance.IssueOrder(new MoveOrder(hit.point));
                 }
-            } else if(unit != null && unit.TeamIndex != SelectionManager.instance.TeamIndex)
+            }
+
+            else if (prod != null && prod.TeamIndex == SelectionManager.instance.TeamIndex)
+            {
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                {
+                    SelectionManager.instance.AddOrder(new DonateOrder(prod));
+                }
+                else
+                {
+                    SelectionManager.instance.IssueOrder(new DonateOrder(prod));
+                }
+            }
+
+            else if(unit != null && unit.TeamIndex != SelectionManager.instance.TeamIndex)
             {
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 {
