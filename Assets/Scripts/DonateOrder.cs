@@ -30,6 +30,5 @@ public class DonateOrder : Order {
     {
         //TODO: This is probably inneficient b/c we recalculate route every frame
         sel.SetNavTarget(targetLocation);
-        Debug.Log("hi1");
     }
 }

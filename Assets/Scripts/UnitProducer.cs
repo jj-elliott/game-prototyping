@@ -73,11 +73,14 @@ public class UnitProducer : UnitBase {
                 buildProgress = 0;
             }
         }
-        
+
 
 
     }
-
+    public void UpdateProgress(float addVal)
+    {
+        buildProgress += addVal;
+    }
     void SpawnUnit()
     {
         if (activeUnit >= unitPrefab.Length)
