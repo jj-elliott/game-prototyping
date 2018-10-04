@@ -18,7 +18,7 @@ public class DonateOrder : Order {
     {
         if((targetLocation - sel.transform.position).magnitude < stopDistance)
         {
-            prod.UpdateProgress(0.3f);
+            prod.UpdateBuildProgress(0.3f);
             UnitCombat unit = sel.transform.GetComponentInChildren<UnitCombat>();
             unit.Damage(1000);
             return true;

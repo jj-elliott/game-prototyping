@@ -6,18 +6,20 @@ using UnityEngine.UI;
 
 [System.Serializable]
 public class OnBuildProgressEvent : UnityEvent<float> { };
-public class UnitProducer : UnitBase {
 
-    [SerializeField]
-    public float[] buildTime;
-    private float buildProgress;
-    public Transform spawnLocation;
+public class UnitProducer : UnitBase
+{
     [SerializeField]
     public GameObject[] unitPrefab;
+    [SerializeField]
+    public float[] buildTime;
+    public Transform spawnLocation;
     public OnBuildProgressEvent OnBuildProgress;
-    public int activeUnit = 0;
-    float minRallyDistance = 5;
     public Text productionText;
+    public int activeUnit = 0;
+    public float minRallyDistance = 5;
+    protected float buildProgress;
+
     public override void Start()
     {
         base.Start();
@@ -26,64 +28,43 @@ public class UnitProducer : UnitBase {
         this.meshAgent.destination = transform.position;
         meshAgent.enabled = wasEnabled;
     }
+
     protected override void Update()
     {
         base.Update();
 
-        float buildBonus = 1.0f;
-        foreach (ControlTower tower in ControlTower.Towers)
+        if (TeamIndex >= 0)
         {
-            if (tower.TeamIndex == TeamIndex)
+            productionText.text = "Building: " + unitPrefab[activeUnit].name;
+
+            buildProgress += Time.deltaTime / buildTime[activeUnit];
+            buildProgress = Mathf.Clamp01(buildProgress);
+
+            if (OnBuildProgress != null)
             {
-                buildBonus *= tower.BuildBonus;
+                OnBuildProgress.Invoke(buildProgress);
+            }
+
+            if (buildProgress >= 1.0f)
+            {
+                SpawnUnit();
+                buildProgress = 0.0f;
             }
         }
-
-        buildProgress += Time.deltaTime / buildTime[activeUnit] * buildBonus;
-        buildProgress = Mathf.Clamp01(buildProgress);
-        productionText.text = "Building: " + unitPrefab[activeUnit].name;
-        if (OnBuildProgress != null)
+        else
         {
-            OnBuildProgress.Invoke(buildProgress);
+            productionText.text = "";
         }
-
-        if(buildProgress == 1)
-        {
-            buildProgress = 0;
-            SpawnUnit();
-            if (TeamIndex != SelectionManager.instance.TeamIndex)
-                activeUnit = Random.Range(0, unitPrefab.Length);
-        }
-
-        if(TeamIndex == SelectionManager.instance.TeamIndex)
-        {
-            if (Input.GetKeyDown(KeyCode.Alpha0))
-            {
-                activeUnit = 0;
-                buildProgress = 0;
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                activeUnit = 1;
-                buildProgress = 0;
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                activeUnit = 2;
-                buildProgress = 0;
-            }
-        }
-
-
-
     }
-    public void UpdateProgress(float addVal)
+
+    public void UpdateBuildProgress(float addVal)
     {
         buildProgress += addVal;
     }
-    void SpawnUnit()
+
+    protected virtual void SpawnUnit()
     {
-        if (activeUnit >= unitPrefab.Length)
+        if (activeUnit < 0 && activeUnit >= unitPrefab.Length)
             return;
         Selectable spawned = Instantiate(unitPrefab[activeUnit], spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
         spawned.Start();

@@ -41,7 +41,7 @@ GameObject:
   - component: {fileID: 33526649234268940}
   - component: {fileID: 23563295239554952}
   m_Layer: 0
-  m_Name: PlayerFactory (1)
+  m_Name: SelectableMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,6 +59,7 @@ GameObject:
   - component: {fileID: 23153586933026852}
   - component: {fileID: 65920610286051682}
   - component: {fileID: 114618407877212808}
+  - component: {fileID: 114871564649770858}
   - component: {fileID: 114582690215764400}
   - component: {fileID: 195482081449180036}
   - component: {fileID: 54692827467984974}
@@ -151,7 +152,7 @@ GameObject:
   - component: {fileID: 33861419543285026}
   - component: {fileID: 23837565230756428}
   m_Layer: 0
-  m_Name: PlayerFactory (1)
+  m_Name: SelectableMesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -215,7 +216,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1405737710893708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.5, y: 2.3, z: 3.2}
+  m_LocalPosition: {x: -164.5, y: 2.3, z: 3.2}
   m_LocalScale: {x: 10.1, y: 10.1, z: 10.1}
   m_Children:
   - {fileID: 224393620221694882}
@@ -721,15 +722,15 @@ MonoBehaviour:
   meshAgent: {fileID: 0}
   MovementSpeed: 0
   UnitWeapon: {fileID: 0}
+  unitPrefab:
+  - {fileID: 1771509390771818, guid: c564c675400584ea0ac4d26a2aa5bc64, type: 2}
+  - {fileID: 1771509390771818, guid: e7dbcf5e49da4aa4fa418b0f1fbd35db, type: 2}
+  - {fileID: 1771509390771818, guid: 762d570b10e0544df9b4f4c817a93b4e, type: 2}
   buildTime:
   - 1
   - 3
   - 7
   spawnLocation: {fileID: 4705157495089482}
-  unitPrefab:
-  - {fileID: 1771509390771818, guid: c564c675400584ea0ac4d26a2aa5bc64, type: 2}
-  - {fileID: 1771509390771818, guid: e7dbcf5e49da4aa4fa418b0f1fbd35db, type: 2}
-  - {fileID: 1771509390771818, guid: 762d570b10e0544df9b4f4c817a93b4e, type: 2}
   OnBuildProgress:
     m_PersistentCalls:
       m_Calls:
@@ -746,8 +747,9 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: OnBuildProgressEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  activeUnit: 0
   productionText: {fileID: 114518342009643704}
+  activeUnit: 0
+  minRallyDistance: 5
 --- !u!114 &114624635584439974
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -785,6 +787,81 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114871564649770858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1405737710893708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea3d92c795ed6014a9fbac5d12963f4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TeamIndex: 0
+  OnSelected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1372935287667746}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  OnDeselected:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1372935287667746}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  meshAgent: {fileID: 0}
+  MovementSpeed: 0
+  UnitWeapon: {fileID: 0}
+  unitPrefab:
+  - {fileID: 1771509390771818, guid: c564c675400584ea0ac4d26a2aa5bc64, type: 2}
+  - {fileID: 1771509390771818, guid: e7dbcf5e49da4aa4fa418b0f1fbd35db, type: 2}
+  - {fileID: 1771509390771818, guid: 762d570b10e0544df9b4f4c817a93b4e, type: 2}
+  buildTime:
+  - 1
+  - 3
+  - 7
+  spawnLocation: {fileID: 4705157495089482}
+  OnBuildProgress:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 114008216250849260}
+        m_MethodName: set_fillAmount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: OnBuildProgressEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
+      PublicKeyToken=null
+  productionText: {fileID: 114518342009643704}
+  activeUnit: 0
+  minRallyDistance: 5
 --- !u!114 &114974059643111226
 MonoBehaviour:
   m_ObjectHideFlags: 1
