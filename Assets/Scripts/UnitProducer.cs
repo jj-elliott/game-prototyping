@@ -9,17 +9,20 @@ public class OnBuildProgressEvent : UnityEvent<float> { };
 public class UnitProducer : UnitBase {
 
     [SerializeField]
-    public float[] buildTime;
+    public float buildTime;
     private float buildProgress;
     public Transform spawnLocation;
     [SerializeField]
-    public GameObject[] unitPrefab;
+    public GameObject unitPrefab;
     public OnBuildProgressEvent OnBuildProgress;
-    public int activeUnit = 0;
     float minRallyDistance = 5;
     public Text productionText;
+    public Order standingOrder;
+
+
     public override void Start()
     {
+        isSelectable = true;
         base.Start();
         bool wasEnabled = meshAgent.enabled;
         meshAgent.enabled = true;
@@ -39,9 +42,9 @@ public class UnitProducer : UnitBase {
             }
         }
 
-        buildProgress += Time.deltaTime / buildTime[activeUnit] * buildBonus;
+        buildProgress += Time.deltaTime / buildTime * buildBonus;
         buildProgress = Mathf.Clamp01(buildProgress);
-        productionText.text = "Building: " + unitPrefab[activeUnit].name;
+        productionText.text = "Building: " + unitPrefab.name;
         if (OnBuildProgress != null)
         {
             OnBuildProgress.Invoke(buildProgress);
@@ -51,27 +54,25 @@ public class UnitProducer : UnitBase {
         {
             buildProgress = 0;
             SpawnUnit();
-            if (TeamIndex != SelectionManager.instance.TeamIndex)
-                activeUnit = Random.Range(0, unitPrefab.Length);
         }
 
         if(TeamIndex == SelectionManager.instance.TeamIndex)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha0))
-            {
-                activeUnit = 0;
-                buildProgress = 0;
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha1))
-            {
-                activeUnit = 1;
-                buildProgress = 0;
-            }
-            else if (Input.GetKeyDown(KeyCode.Alpha2))
-            {
-                activeUnit = 2;
-                buildProgress = 0;
-            }
+            //if (Input.GetKeyDown(KeyCode.Alpha0))
+            //{
+            //    activeUnit = 0;
+            //    buildProgress = 0;
+            //}
+            //else if (Input.GetKeyDown(KeyCode.Alpha1))
+            //{
+            //    activeUnit = 1;
+            //    buildProgress = 0;
+            //}
+            //else if (Input.GetKeyDown(KeyCode.Alpha2))
+            //{
+            //    activeUnit = 2;
+            //    buildProgress = 0;
+            //}
         }
 
 
@@ -83,12 +84,25 @@ public class UnitProducer : UnitBase {
     }
     void SpawnUnit()
     {
-        if (activeUnit >= unitPrefab.Length)
-            return;
-        Selectable spawned = Instantiate(unitPrefab[activeUnit], spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
+        Selectable spawned = Instantiate(unitPrefab, spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
         spawned.Start();
+        ((UnitBase)spawned).homeBase = this;
+        if(standingOrder != null)
+            spawned.SetOrder(standingOrder);
 
         //if(Vector3.Distance(this.meshAgent.destination, transform.position) > minRallyDistance)
         //    spawned.SetOrder(new MoveOrder(this.meshAgent.destination));
+    }
+
+    public override void SetOrder(Order order)
+    {
+        standingOrder = order;
+        foreach(var unit in SelectionManager.instance.GetUnits(TeamIndex))
+        {
+            if(((UnitBase)unit).homeBase == this)
+            {
+                unit.SetOrder(order);
+            }
+        }
     }
 }

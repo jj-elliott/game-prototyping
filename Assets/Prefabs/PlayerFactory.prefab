@@ -215,7 +215,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1405737710893708}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -44.5, y: 2.3, z: 3.2}
+  m_LocalPosition: {x: -164.5, y: 2.3, z: 3.2}
   m_LocalScale: {x: 10.1, y: 10.1, z: 10.1}
   m_Children:
   - {fileID: 224393620221694882}
@@ -719,17 +719,13 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   meshAgent: {fileID: 0}
+  isSelectable: 0
   MovementSpeed: 0
   UnitWeapon: {fileID: 0}
-  buildTime:
-  - 1
-  - 3
-  - 7
+  homeBase: {fileID: 0}
+  buildTime: 0
   spawnLocation: {fileID: 4705157495089482}
-  unitPrefab:
-  - {fileID: 1771509390771818, guid: c564c675400584ea0ac4d26a2aa5bc64, type: 2}
-  - {fileID: 1771509390771818, guid: e7dbcf5e49da4aa4fa418b0f1fbd35db, type: 2}
-  - {fileID: 1771509390771818, guid: 762d570b10e0544df9b4f4c817a93b4e, type: 2}
+  unitPrefab: {fileID: 1771509390771818, guid: e7dbcf5e49da4aa4fa418b0f1fbd35db, type: 2}
   OnBuildProgress:
     m_PersistentCalls:
       m_Calls:
@@ -746,7 +742,6 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: OnBuildProgressEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
-  activeUnit: 0
   productionText: {fileID: 114518342009643704}
 --- !u!114 &114624635584439974
 MonoBehaviour:

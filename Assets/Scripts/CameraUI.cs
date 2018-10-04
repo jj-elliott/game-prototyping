@@ -10,6 +10,21 @@ public class CameraUI : MonoBehaviour {
     Vector2 clickStartPos;
     public float dragThreshold = 5;
     UnityEngine.XR.WSA.Input.GestureRecognizer recognizer;
+    bool awaitingDoubleTap = false;
+    float doubleTapDelay = 1.0f;
+    public Transform cursor;
+    public GameObject cursorPrefab;
+
+    IEnumerator DoTap(Ray input)
+    {
+        yield return new WaitForSeconds(doubleTapDelay);
+        if (awaitingDoubleTap)
+        {
+            OnLeftClick(input);
+            awaitingDoubleTap = false;
+        }
+    }
+
     // Use this for initialization
     void Start () {
         camera = GetComponent<Camera>();
@@ -24,13 +39,25 @@ public class CameraUI : MonoBehaviour {
         // The general idea here is to preform a raycast from the camera and see if we hit anything we can select
 
         RaycastHit hit;
-        
-        // Perform the raycast, and store info about the result in the hit
-        Physics.Raycast(ray, out hit);
+        print("Left clicking");
 
+        // Perform the raycast, and store info about the result in the hit
+        var origin = ray.origin;
+        var dir = ray.direction;
+        print(origin);
+        print(dir);
+        print(transform.forward);
+        Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 1000f, LayerMask.GetMask("Default"));
+
+
+        if (hit.transform)
+        {
+            Instantiate(cursorPrefab, hit.point, Quaternion.identity);
+        }
 
         if (hit.transform != null) // We hit something
         {
+            print(hit.transform);
             Selectable sel = hit.transform.GetComponent<Selectable>(); // Ask unity if this thing has a selectable component on it
 
             if (sel != null && sel.TeamIndex == SelectionManager.instance.TeamIndex)
@@ -52,12 +79,14 @@ public class CameraUI : MonoBehaviour {
 
     void OnAirTap(UnityEngine.XR.WSA.Input.InteractionSourceKind source, int tapCount, Ray headRay)
     {
-        print("Detected tap! " + tapCount);
-        if(tapCount == 1)
+        
+        if(!awaitingDoubleTap)
         {
-            OnLeftClick(headRay);
+            awaitingDoubleTap = true;
+            StartCoroutine(DoTap(headRay));
         } else
         {
+            print("DoubleTap! ");
             OnRightClick(headRay);
         }
     }
@@ -87,9 +116,8 @@ public class CameraUI : MonoBehaviour {
         // The general idea here is to preform a raycast from the camera and see if we hit anything we can select
 
         RaycastHit hit;
+        Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 1000f);
 
-        // Perform the raycast, and store info about the result in the hit
-        Physics.Raycast(ray, out hit);
 
 
         if (hit.transform != null)
@@ -120,7 +148,7 @@ public class CameraUI : MonoBehaviour {
                 }
             }
 
-            else if(unit != null && unit.TeamIndex != SelectionManager.instance.TeamIndex)
+            else if(unit != null && unit.isSelectable && unit.TeamIndex != SelectionManager.instance.TeamIndex)
             {
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 {
@@ -136,6 +164,17 @@ public class CameraUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+
+        RaycastHit hit;
+        Physics.Raycast(camera.transform.position, camera.transform.forward, out hit, 1000f, LayerMask.GetMask("Default"));
+
+        if (hit.transform)
+        {
+            cursor.position = hit.point;
+        } else
+        {
+            cursor.position = camera.transform.position + camera.transform.forward * 1000f;
+        }
 
         if (Input.GetMouseButtonDown(0)) // Did the player just click down the left mouse?
         {

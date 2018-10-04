@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4411787583518472}
   - component: {fileID: 114771597966667086}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ProjectileWeapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -37,7 +37,7 @@ GameObject:
   - component: {fileID: 4626648331965244}
   - component: {fileID: 33698982391881756}
   - component: {fileID: 23918871263457284}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SelectionOutline
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 114461123190253600}
   - component: {fileID: 114454104503554366}
   - component: {fileID: 114325119531998648}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -82,7 +82,7 @@ GameObject:
   - component: {fileID: 54861169178751856}
   - component: {fileID: 114969080304009242}
   - component: {fileID: 114235366031612170}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnemyUnit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   - component: {fileID: 224674939677131154}
   - component: {fileID: 222819302667966966}
   - component: {fileID: 114544368772177706}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,8 +314,10 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   meshAgent: {fileID: 0}
+  isSelectable: 0
   MovementSpeed: 0
   UnitWeapon: {fileID: 0}
+  homeBase: {fileID: 0}
 --- !u!114 &114325119531998648
 MonoBehaviour:
   m_ObjectHideFlags: 1

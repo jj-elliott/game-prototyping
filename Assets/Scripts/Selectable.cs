@@ -11,6 +11,7 @@ public class Selectable : MonoBehaviour {
     public UnityEvent OnSelected, OnDeselected;
     public NavMeshAgent meshAgent;
     public bool idle { get { return orderQueue.Count == 0; } }
+    public bool isSelectable = false;
 
     // Use this for initialization
     public virtual void Start () {
@@ -48,7 +49,7 @@ public class Selectable : MonoBehaviour {
             meshAgent.SetDestination(targetPos);
     }
 
-    public void SetOrder(Order order)
+    public virtual void SetOrder(Order order)
     {
         orderQueue.Clear();
         orderQueue.Enqueue(order);

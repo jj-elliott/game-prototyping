@@ -6,7 +6,7 @@ public abstract class UnitBase : Selectable
     public float MovementSpeed;
     public UnitWeapon UnitWeapon;
     private Transform weaponTarget;
-
+    public UnitProducer homeBase;
     public static List<UnitBase> Units { get { if (_units != null) return _units; else { _units = new List<UnitBase>(); return _units; } } }
     static List<UnitBase> _units;
     // Use this for initialization
@@ -22,10 +22,25 @@ public abstract class UnitBase : Selectable
         Units.Add(this);
 	}
 	
+    void UpdateHomeBase()
+    {
+
+    }
 	// Update is called once per frame
 	protected override void Update ()
     {
+        if (idle && this as UnitProducer == null)
+        {
+            if (homeBase == null)
+            {
+                UpdateHomeBase();
+            }
+
+            if(homeBase.standingOrder != null)
+                SetOrder(homeBase.standingOrder);
+        }
         base.Update();
+        
 	}
 
     protected override void OnDestroy()
