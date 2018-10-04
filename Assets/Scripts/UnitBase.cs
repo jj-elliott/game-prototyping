@@ -7,6 +7,7 @@ public abstract class UnitBase : Selectable
     public float MovementSpeed;
     public UnitWeapon UnitWeapon;
     private Transform weaponTarget;
+    public UnitProducer homeBase;
 
     // Use this for initialization
     public override void Start ()
@@ -14,9 +15,25 @@ public abstract class UnitBase : Selectable
         base.Start();
 	}
 	
+    void UpdateHomeBase()
+    {
+
+    }
+
 	// Update is called once per frame
 	protected override void Update ()
     {
+        if (idle && this as UnitProducer == null)
+        {
+            if (homeBase == null)
+            {
+                UpdateHomeBase();
+            }
+
+            if(homeBase.standingOrder != null)
+                SetOrder(homeBase.standingOrder);
+        }
+
         base.Update();
 	}
 

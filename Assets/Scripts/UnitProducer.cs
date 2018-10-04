@@ -10,18 +10,18 @@ public class OnBuildProgressEvent : UnityEvent<float> { };
 public class UnitProducer : UnitBase
 {
     [SerializeField]
-    public GameObject[] unitPrefab;
-    [SerializeField]
-    public float[] buildTime;
+    public GameObject unitPrefab;
+    public float buildTime;
     public Transform spawnLocation;
     public OnBuildProgressEvent OnBuildProgress;
     public Text productionText;
-    public int activeUnit = 0;
     public float minRallyDistance = 5;
+    public Order standingOrder;
     protected float buildProgress;
 
     public override void Start()
     {
+        isSelectable = true;
         base.Start();
         bool wasEnabled = meshAgent.enabled;
         meshAgent.enabled = true;
@@ -35,9 +35,9 @@ public class UnitProducer : UnitBase
 
         if (TeamIndex >= 0)
         {
-            productionText.text = "Building: " + unitPrefab[activeUnit].name;
+            productionText.text = "Building: " + unitPrefab.name;
 
-            buildProgress += Time.deltaTime / buildTime[activeUnit];
+            buildProgress += Time.deltaTime / buildTime;
             buildProgress = Mathf.Clamp01(buildProgress);
 
             if (OnBuildProgress != null)
@@ -64,12 +64,25 @@ public class UnitProducer : UnitBase
 
     protected virtual void SpawnUnit()
     {
-        if (activeUnit < 0 && activeUnit >= unitPrefab.Length)
-            return;
-        Selectable spawned = Instantiate(unitPrefab[activeUnit], spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
+        Selectable spawned = Instantiate(unitPrefab, spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
         spawned.Start();
+        ((UnitBase)spawned).homeBase = this;
+        if(standingOrder != null)
+            spawned.SetOrder(standingOrder);
 
         //if(Vector3.Distance(this.meshAgent.destination, transform.position) > minRallyDistance)
         //    spawned.SetOrder(new MoveOrder(this.meshAgent.destination));
+    }
+
+    public override void SetOrder(Order order)
+    {
+        standingOrder = order;
+        foreach(var unit in SelectionManager.instance.GetUnits(TeamIndex))
+        {
+            if(((UnitBase)unit).homeBase == this)
+            {
+                unit.SetOrder(order);
+            }
+        }
     }
 }
