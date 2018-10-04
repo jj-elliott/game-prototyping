@@ -22,11 +22,14 @@ public class SimpleAI : MonoBehaviour {
             float closestDistance = float.MaxValue;
             foreach(var unit in SelectionManager.instance.GetUnits(0))
             {
-                var distToEnemy = Vector3.Distance(unit.transform.position, transform.position);
-                if(closestEnemy == null || distToEnemy < closestDistance)
+                if (unit != null)
                 {
-                    closestEnemy = unit.transform;
-                    closestDistance = distToEnemy;
+                    var distToEnemy = Vector3.Distance(unit.transform.position, transform.position);
+                    if (closestEnemy == null || distToEnemy < closestDistance)
+                    {
+                        closestEnemy = unit.transform;
+                        closestDistance = distToEnemy;
+                    }
                 }
             }
             if(closestEnemy != null)
