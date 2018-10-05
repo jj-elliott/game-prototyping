@@ -90,7 +90,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -493,6 +493,11 @@ Prefab:
     - target: {fileID: 4011105204463194, guid: 0b04f2664b3984a4f8043e4e23f22a3d, type: 2}
       propertyPath: m_RootOrder
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 224663684277095978, guid: 0b04f2664b3984a4f8043e4e23f22a3d,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b04f2664b3984a4f8043e4e23f22a3d, type: 2}
@@ -6790,6 +6795,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragThreshold: 5
+  cursor: {fileID: 0}
+  cursorPrefab: {fileID: 0}
 --- !u!81 &1406992581
 AudioListener:
   m_ObjectHideFlags: 0
@@ -7090,18 +7097,7 @@ Prefab:
       propertyPath: m_RootOrder
       value: 13
       objectReference: {fileID: 0}
-    - target: {fileID: 114582690215764400, guid: d7bed07293e6e1d4ba255846f7cbd2a6,
-        type: 2}
-      propertyPath: OnDeath.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 1355826552}
-    - target: {fileID: 224016507034401230, guid: d7bed07293e6e1d4ba255846f7cbd2a6,
-        type: 2}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 114618407877212808, guid: d7bed07293e6e1d4ba255846f7cbd2a6, type: 2}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7bed07293e6e1d4ba255846f7cbd2a6, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &1524352125

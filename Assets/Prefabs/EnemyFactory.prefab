@@ -509,16 +509,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   meshAgent: {fileID: 0}
+  isSelectable: 0
   MovementSpeed: 0
   UnitWeapon: {fileID: 0}
-  unitPrefab:
-  - {fileID: 1922239885929232, guid: c890cc06d06db4365a13dcfaa904ff81, type: 2}
-  - {fileID: 1922239885929232, guid: 4631a3d8cbc8b4641b86d4e53a39b1bf, type: 2}
-  - {fileID: 1922239885929232, guid: 3d5a4481e1b2447438620ce86978b02e, type: 2}
-  buildTime:
-  - 1
-  - 3
-  - 7
+  homeBase: {fileID: 114868724028317446}
+  unitPrefab: {fileID: 1922239885929232, guid: c890cc06d06db4365a13dcfaa904ff81, type: 2}
+  buildTime: 1
   spawnLocation: {fileID: 4217465115914632}
   OnBuildProgress:
     m_PersistentCalls:
@@ -537,7 +533,6 @@ MonoBehaviour:
     m_TypeName: OnBuildProgressEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   productionText: {fileID: 114105950810307046}
-  activeUnit: 0
   minRallyDistance: 5
 --- !u!114 &114869253461996602
 MonoBehaviour:

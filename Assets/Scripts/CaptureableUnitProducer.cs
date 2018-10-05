@@ -25,6 +25,8 @@ public class CaptureableUnitProducer : UnitProducer
     public Material neutralUnitMaterial;
     protected float playerCaptureProgress = 0.0f;
     protected float enemyCaptureProgress = 0.0f;
+    [SerializeField]
+    public GameObject enemyPrefab;
 
 	// Use this for initialization
 	public override void Start ()
@@ -128,19 +130,41 @@ public class CaptureableUnitProducer : UnitProducer
 
         if (playerCaptureProgress == 1.0f)
         {
-            TeamIndex = activeUnit = 0;
+            TeamIndex = 0;
             gameObject.GetComponent<Renderer>().material = playerUnitMaterial;
 
         }
         else if (playerCaptureProgress == 1.0f)
         {
-            TeamIndex = activeUnit = 1;
+            TeamIndex = 1;
             gameObject.GetComponent<Renderer>().material = enemyUnitMaterial;
         }
         else
         {
-            TeamIndex = activeUnit = -1;
+            TeamIndex = -1;
             gameObject.GetComponent<Renderer>().material = neutralUnitMaterial;
+        }
+    }
+
+    protected override void SpawnUnit()
+    {
+        if (TeamIndex == 0)
+        {
+            Selectable spawned = Instantiate(unitPrefab, spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
+            spawned.Start();
+            ((UnitBase)spawned).homeBase = this;
+            if (standingOrder != null)
+                spawned.SetOrder(standingOrder);
+
+        }
+        else if (TeamIndex == 1)
+        {
+            Selectable spawned = Instantiate(enemyPrefab, spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
+            spawned.Start();
+            ((UnitBase)spawned).homeBase = this;
+            if (standingOrder != null)
+                spawned.SetOrder(standingOrder);
+
         }
     }
 }

@@ -823,14 +823,12 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   meshAgent: {fileID: 0}
+  isSelectable: 1
   MovementSpeed: 0
   UnitWeapon: {fileID: 0}
-  unitPrefab:
-  - {fileID: 1771509390771818, guid: 762d570b10e0544df9b4f4c817a93b4e, type: 2}
-  - {fileID: 1922239885929232, guid: 3d5a4481e1b2447438620ce86978b02e, type: 2}
-  buildTime:
-  - 7
-  - 7
+  homeBase: {fileID: 114564399970788920}
+  unitPrefab: {fileID: 1771509390771818, guid: 762d570b10e0544df9b4f4c817a93b4e, type: 2}
+  buildTime: 7
   spawnLocation: {fileID: 4936499913031094}
   OnBuildProgress:
     m_PersistentCalls:
@@ -849,7 +847,6 @@ MonoBehaviour:
     m_TypeName: OnBuildProgressEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   productionText: {fileID: 114329231777723112}
-  activeUnit: -1
   minRallyDistance: 5
   captureRadius: 10
   captureTime: 10
@@ -889,6 +886,8 @@ MonoBehaviour:
   playerUnitMaterial: {fileID: 2100000, guid: 0e83507a7014b35409a6690c872bcef4, type: 2}
   enemyUnitMaterial: {fileID: 2100000, guid: 3a911a47b6db56243bfe31c99e57a92c, type: 2}
   neutralUnitMaterial: {fileID: 2100000, guid: e0d5b0c93de39304da90ef7b4452816f, type: 2}
+  enemyPrefab: {fileID: 1922239885929232, guid: 3d5a4481e1b2447438620ce86978b02e,
+    type: 2}
 --- !u!114 &114575723155447318
 MonoBehaviour:
   m_ObjectHideFlags: 1
