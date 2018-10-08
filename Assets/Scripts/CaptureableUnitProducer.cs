@@ -134,7 +134,7 @@ public class CaptureableUnitProducer : UnitProducer
             gameObject.GetComponent<Renderer>().material = playerUnitMaterial;
 
         }
-        else if (playerCaptureProgress == 1.0f)
+        else if (enemyCaptureProgress == 1.0f)
         {
             TeamIndex = 1;
             gameObject.GetComponent<Renderer>().material = enemyUnitMaterial;

@@ -18,7 +18,15 @@ public class DonateOrder : Order {
     {
         if((targetLocation - sel.transform.position).magnitude < stopDistance)
         {
-            prod.UpdateBuildProgress(0.3f);
+            if(prod.TeamIndex == 0)
+            {
+                prod.UpdateBuildProgress(0.3f);
+            }
+            else
+            {
+                CaptureableUnitProducer capturablePro = (CaptureableUnitProducer)prod;
+                capturablePro.UpdatePlayerCaptureProgress(0.1f);
+            }
             UnitCombat unit = sel.transform.GetComponentInChildren<UnitCombat>();
             unit.Damage(1000);
             return true;
