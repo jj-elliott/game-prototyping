@@ -167,4 +167,32 @@ public class CaptureableUnitProducer : UnitProducer
 
         }
     }
+
+    public void UpdatePlayerCaptureProgress(float captureValue)
+    {
+        if (enemyCaptureProgress > 0.0f)
+        {
+            enemyCaptureProgress -= captureValue;
+            enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
+        }
+        else
+        {
+            playerCaptureProgress += captureValue;
+            playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
+        }
+    }
+
+    public void UpdateEnemyCaptureProgress(float captureValue)
+    {
+        if (playerCaptureProgress > 0.0f)
+        {
+            playerCaptureProgress -= captureValue;
+            playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
+        }
+        else
+        {
+            enemyCaptureProgress += captureValue;
+            enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
+        }
+    }
 }
