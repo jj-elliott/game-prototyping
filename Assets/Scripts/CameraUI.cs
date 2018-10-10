@@ -148,6 +148,18 @@ public class CameraUI : MonoBehaviour {
                 }
             }
 
+            else if (prod != null && prod.TeamIndex != SelectionManager.instance.TeamIndex && prod.convertable == 1)
+            {
+                if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
+                {
+                    SelectionManager.instance.AddOrder(new DonateOrder(prod));
+                }
+                else
+                {
+                    SelectionManager.instance.IssueOrder(new DonateOrder(prod));
+                }
+            }
+
             else if(unit != null && unit.isSelectable && unit.TeamIndex != SelectionManager.instance.TeamIndex)
             {
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))

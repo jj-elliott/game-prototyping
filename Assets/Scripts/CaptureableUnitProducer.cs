@@ -31,6 +31,7 @@ public class CaptureableUnitProducer : UnitProducer
 	// Use this for initialization
 	public override void Start ()
     {
+        convertable = 1;
         base.Start();
 	}
 	
