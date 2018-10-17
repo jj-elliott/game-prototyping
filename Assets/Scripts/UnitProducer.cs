@@ -17,14 +17,14 @@ public class UnitProducer : UnitBase
     public Text productionText;
     public float minRallyDistance = 5;
     public Order standingOrder;
-    public int convertable;
+    public bool convertable;
     protected float buildProgress;
 
 
     public override void Start()
     {
         isSelectable = true;
-        convertable = 0;
+        convertable = false;
         base.Start();
         bool wasEnabled = meshAgent.enabled;
         meshAgent.enabled = true;

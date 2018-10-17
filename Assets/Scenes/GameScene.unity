@@ -90,7 +90,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -6796,7 +6796,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dragThreshold: 5
   cursor: {fileID: 0}
-  cursorPrefab: {fileID: 0}
 --- !u!81 &1406992581
 AudioListener:
   m_ObjectHideFlags: 0
@@ -7096,6 +7095,11 @@ Prefab:
     - target: {fileID: 4233134587446618, guid: d7bed07293e6e1d4ba255846f7cbd2a6, type: 2}
       propertyPath: m_RootOrder
       value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 224016507034401230, guid: d7bed07293e6e1d4ba255846f7cbd2a6,
+        type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d7bed07293e6e1d4ba255846f7cbd2a6, type: 2}

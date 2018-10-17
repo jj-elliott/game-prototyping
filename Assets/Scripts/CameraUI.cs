@@ -13,7 +13,7 @@ public class CameraUI : MonoBehaviour {
     bool awaitingDoubleTap = false;
     float doubleTapDelay = 1.0f;
     public Transform cursor;
-    public GameObject cursorPrefab;
+    //public GameObject cursorPrefab;
 
     IEnumerator DoTap(Ray input)
     {
@@ -52,7 +52,7 @@ public class CameraUI : MonoBehaviour {
 
         if (hit.transform)
         {
-            Instantiate(cursorPrefab, hit.point, Quaternion.identity);
+            //Instantiate(cursorPrefab, hit.point, Quaternion.identity);
         }
 
         if (hit.transform != null) // We hit something
@@ -148,7 +148,7 @@ public class CameraUI : MonoBehaviour {
                 }
             }
 
-            else if (prod != null && prod.TeamIndex != SelectionManager.instance.TeamIndex && prod.convertable == 1)
+            else if (prod != null && prod.TeamIndex != SelectionManager.instance.TeamIndex && prod.convertable)
             {
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 {

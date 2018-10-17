@@ -12,8 +12,6 @@ public class OnEnemyCaptureProgressEvent : UnityEvent<float> { };
 
 public class CaptureableUnitProducer : UnitProducer
 {
-    public float captureRadius;
-    public float captureTime;
     public OnPlayerCaptureProgressEvent OnPlayerCaptureProgress;
     public OnEnemyCaptureProgressEvent OnEnemyCaptureProgress;
     public Text captureText;
@@ -31,7 +29,7 @@ public class CaptureableUnitProducer : UnitProducer
 	// Use this for initialization
 	public override void Start ()
     {
-        convertable = 1;
+        convertable = true;
         base.Start();
 	}
 	
@@ -40,105 +38,28 @@ public class CaptureableUnitProducer : UnitProducer
     {
         base.Update();
 
-        int numPlayerUnits = 0;
-        List<Selectable> playerUnits = SelectionManager.instance.GetUnits(0);
-        foreach (Selectable unit in playerUnits)
+        if (OnPlayerCaptureProgress != null)
         {
-            if (unit != null && Vector3.Distance(transform.position, unit.transform.position) < captureRadius)
-            {
-               ++numPlayerUnits;
-            }
+            OnPlayerCaptureProgress.Invoke(playerCaptureProgress);
         }
 
-        int numEnemyUnits = 0;
-        List<Selectable> enemyUnits = SelectionManager.instance.GetUnits(1);
-        foreach (Selectable unit in enemyUnits)
+        if (OnEnemyCaptureProgress != null)
         {
-            if (unit != null && Vector3.Distance(transform.position, unit.transform.position) < captureRadius)
-            {
-                ++numEnemyUnits;
-            }
-        }
-
-        if (numPlayerUnits > numEnemyUnits)
-        {
-            float difference = (float)(numPlayerUnits - numEnemyUnits);
-            if (enemyCaptureProgress > 0.0f)
-            {
-                captureText.text = "Player is capturing factory";
-
-                enemyCaptureProgress -= Time.deltaTime / captureTime * difference;
-                enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
-
-                if (OnEnemyCaptureProgress != null)
-                {
-                    OnEnemyCaptureProgress.Invoke(enemyCaptureProgress);
-                }
-            }
-            else if (playerCaptureProgress < 1.0f)
-            {
-                captureText.text = "Player is capturing factory";
-
-                playerCaptureProgress += Time.deltaTime / captureTime * difference;
-                playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
-
-                if (OnPlayerCaptureProgress != null)
-                {
-                    OnPlayerCaptureProgress.Invoke(playerCaptureProgress);
-                }
-            }
-            else
-            {
-                captureText.text = "";
-            }
-        }
-        else if (numPlayerUnits < numEnemyUnits)
-        {
-            float difference = (float)(numEnemyUnits - numPlayerUnits);
-            if (playerCaptureProgress > 0.0f)
-            {
-                captureText.text = "Enemy is capturing factory";
-
-                playerCaptureProgress -= Time.deltaTime / captureTime * difference;
-                playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
-
-                if (OnPlayerCaptureProgress != null)
-                {
-                    OnPlayerCaptureProgress.Invoke(playerCaptureProgress);
-                }
-            }
-            else if (enemyCaptureProgress < 1.0f)
-            {
-                captureText.text = "Enemy is capturing factory";
-
-                enemyCaptureProgress += Time.deltaTime / captureTime * difference;
-                enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
-
-                if (OnEnemyCaptureProgress != null)
-                {
-                    OnEnemyCaptureProgress.Invoke(enemyCaptureProgress);
-                }
-            }
-            else
-            {
-                captureText.text = "";
-            }
-        }
-        else
-        {
-            captureText.text = "";
+            OnEnemyCaptureProgress.Invoke(enemyCaptureProgress);
         }
 
         if (playerCaptureProgress == 1.0f)
         {
             TeamIndex = 0;
             gameObject.GetComponent<Renderer>().material = playerUnitMaterial;
+            captureText.text = "";
 
         }
         else if (enemyCaptureProgress == 1.0f)
         {
             TeamIndex = 1;
             gameObject.GetComponent<Renderer>().material = enemyUnitMaterial;
+            captureText.text = "";
         }
         else
         {
@@ -175,11 +96,13 @@ public class CaptureableUnitProducer : UnitProducer
         {
             enemyCaptureProgress -= captureValue;
             enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
+            captureText.text = "Player is capturing factory";
         }
-        else
+        else if (playerCaptureProgress < 1.0f)
         {
             playerCaptureProgress += captureValue;
             playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
+            captureText.text = "Player is capturing factory";
         }
     }
 
@@ -189,11 +112,13 @@ public class CaptureableUnitProducer : UnitProducer
         {
             playerCaptureProgress -= captureValue;
             playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
+            captureText.text = "Enemy is capturing factory";
         }
-        else
+        else if (enemyCaptureProgress < 1.0f)
         {
             enemyCaptureProgress += captureValue;
             enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
+            captureText.text = "Enemy is capturing factory";
         }
     }
 }
