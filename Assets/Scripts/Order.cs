@@ -10,4 +10,5 @@ public abstract class Order {
     //Used to check and see if the order is finished
     public abstract bool Complete(Selectable sel);
 
+    public Vector3 location;
 }

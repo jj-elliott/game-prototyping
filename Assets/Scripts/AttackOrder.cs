@@ -11,6 +11,7 @@ public class AttackOrder : Order
     {
         this.target = target;
         this.targetCombat = target.gameObject.GetComponent<UnitCombat>();
+        location = targetCombat.transform.position;
     }
     public override bool Complete(Selectable sel)
     {
@@ -31,6 +32,7 @@ public class AttackOrder : Order
         {
             return;
         }
+        location = targetCombat.transform.position;
         unit.SetWeaponTarget(target);
         float distToTarget = (target.position - sel.transform.position).magnitude;
         if (distToTarget < weap.MaxRange)

@@ -63,6 +63,7 @@ public class SelectionManager : MonoBehaviour {
     {
         if (sel.OnSelected != null)
         {
+            sel.isSelected = true;
             sel.OnSelected.Invoke();
         }
         currentSelection.Add(sel);
@@ -74,6 +75,7 @@ public class SelectionManager : MonoBehaviour {
 
         if (sel.OnSelected != null)
         {
+            sel.isSelected = true;
             sel.OnSelected.Invoke();
         }
         currentSelection.Add(sel);
@@ -85,6 +87,7 @@ public class SelectionManager : MonoBehaviour {
         {
             if(sel.OnDeselected != null)
             {
+                sel.isSelected = false;
                 sel.OnDeselected.Invoke();
             }
         }

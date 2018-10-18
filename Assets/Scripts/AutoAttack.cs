@@ -20,9 +20,9 @@ public class AutoAttack : MonoBehaviour {
     {
         UnitBase combat = other.GetComponent<UnitBase>();
 
-        if(combat != null && combat.TeamIndex != unit.TeamIndex && unit.idle)
+        if(combat != null && combat.TeamIndex != unit.TeamIndex)
         {
-            unit.SetOrder(new AttackOrder(other.transform));
+            unit.PreemptOrder(new AttackOrder(other.transform));
         }
     }
 }

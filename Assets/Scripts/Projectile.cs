@@ -12,6 +12,9 @@ public class Projectile : MonoBehaviour {
     float ArmingTime;
 
     [SerializeField]
+    float Lifetime = 5f;
+
+    [SerializeField]
     UnityEvent OnImpact;
 
     Collider col;
@@ -29,6 +32,12 @@ public class Projectile : MonoBehaviour {
         col.enabled = true;
     }
 
+    public IEnumerator SelfDestruct()
+    {
+        yield return new WaitForSeconds(Lifetime);
+        Destroy(gameObject);
+    }
+
     public void Fire(Vector3 force, UnitCombat owner)
     {
         col = GetComponent<Collider>();
@@ -43,6 +52,7 @@ public class Projectile : MonoBehaviour {
             StartCoroutine(EnableCollider());
         }
         rigid.AddForce(force);
+        StartCoroutine(SelfDestruct());
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -37,9 +37,9 @@ public abstract class UnitBase : Selectable
         base.Update();
 	}
 
-    protected override void OnDestroy()
+    protected override void OnDeath()
     {
-        base.OnDestroy();
+        base.OnDeath();
     }
 
     public virtual Transform GetWeaponTarget()

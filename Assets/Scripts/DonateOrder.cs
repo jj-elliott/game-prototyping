@@ -12,20 +12,24 @@ public class DonateOrder : Order {
     {
         this.prod = prod;
         this.targetLocation = prod.spawnLocation.position;
+        location = prod.spawnLocation.position;
     }
 
     public override bool Complete(Selectable sel)
     {
         if((targetLocation - sel.transform.position).magnitude < stopDistance)
         {
-            if(prod.TeamIndex == 0)
+            if(prod.TeamIndex == sel.TeamIndex)
             {
                 prod.UpdateBuildProgress(0.3f);
             }
             else
             {
                 CaptureableUnitProducer capturablePro = (CaptureableUnitProducer)prod;
-                capturablePro.UpdatePlayerCaptureProgress(0.1f);
+                if (sel.TeamIndex == 0)
+                    capturablePro.UpdatePlayerCaptureProgress(0.1f);
+                else
+                    capturablePro.UpdateEnemyCaptureProgress(0.1f);
             }
             UnitCombat unit = sel.transform.GetComponentInChildren<UnitCombat>();
             unit.Damage(1000);

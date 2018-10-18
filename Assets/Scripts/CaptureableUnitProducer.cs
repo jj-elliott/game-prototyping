@@ -29,8 +29,8 @@ public class CaptureableUnitProducer : UnitProducer
 	// Use this for initialization
 	public override void Start ()
     {
-        convertable = true;
         base.Start();
+        convertable = true;   
 	}
 	
 	// Update is called once per frame

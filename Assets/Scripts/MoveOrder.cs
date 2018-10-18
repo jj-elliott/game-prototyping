@@ -14,6 +14,7 @@ public class MoveOrder : Order
     public MoveOrder(Vector3 targetLocation)
     {
         this.targetLocation = targetLocation;
+        location = targetLocation;
     }
 
     public override bool Complete(Selectable sel)

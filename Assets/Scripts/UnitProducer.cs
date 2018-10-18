@@ -19,10 +19,17 @@ public class UnitProducer : UnitBase
     public Order standingOrder;
     public bool convertable;
     protected float buildProgress;
+    public static List<UnitProducer> FactoryList;
 
 
     public override void Start()
     {
+        if(FactoryList == null)
+        {
+            FactoryList = new List<UnitProducer>();
+        }
+        FactoryList.Add(this);
+
         isSelectable = true;
         convertable = false;
         base.Start();
@@ -82,7 +89,7 @@ public class UnitProducer : UnitBase
         standingOrder = order;
         foreach(var unit in SelectionManager.instance.GetUnits(TeamIndex))
         {
-            if(((UnitBase)unit).homeBase == this)
+            if(((UnitBase)unit).homeBase == this && (UnitBase)unit != this)
             {
                 unit.SetOrder(order);
             }

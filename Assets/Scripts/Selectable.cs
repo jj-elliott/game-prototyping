@@ -12,6 +12,7 @@ public class Selectable : MonoBehaviour {
     public NavMeshAgent meshAgent;
     public bool idle { get { return orderQueue.Count == 0; } }
     public bool isSelectable = false;
+    public bool isSelected = false;
 
     // Use this for initialization
     public virtual void Start () {
@@ -38,7 +39,7 @@ public class Selectable : MonoBehaviour {
         }
 	}
 
-    protected virtual void OnDestroy()
+    protected virtual void OnDeath()
     {
         SelectionManager.instance.UnRegisterUnit(this);
     }
@@ -57,5 +58,17 @@ public class Selectable : MonoBehaviour {
     public void AddOrder(Order order)
     {
         orderQueue.Enqueue(order);
+    }
+
+    public void PreemptOrder(Order order)
+    {
+        var existingOrders = orderQueue.ToArray();
+        orderQueue.Clear();
+        orderQueue.Enqueue(order);
+
+        foreach(var o in existingOrders)
+        {
+            orderQueue.Enqueue(order);
+        }
     }
 }
