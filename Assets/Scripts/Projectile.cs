@@ -67,7 +67,14 @@ public class Projectile : MonoBehaviour {
 
         if(combat != null)
         {
-            combat.Damage(Damage);
+            if(owner.isBuffed == 1)
+            {
+                combat.Damage(Damage + 3.0f);
+            }
+            else
+            {
+                combat.Damage(Damage);
+            }
         }
         if(OnImpact != null)
         {

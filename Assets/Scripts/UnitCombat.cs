@@ -25,6 +25,8 @@ public class UnitCombat : MonoBehaviour {
     [SerializeField]
     protected UnitBase unit;
 
+    public int isBuffed = 0;
+
     // Use this for initialization
     protected virtual void Start()
     {
@@ -61,5 +63,16 @@ public class UnitCombat : MonoBehaviour {
             }
             Destroy(unit.gameObject);
         }
+    }
+
+    public void buffUnit()
+    {
+        isBuffed = 1;
+        print("buffed");
+    }
+    public void debuffUnit()
+    {
+        isBuffed = 0;
+        print("debuffed");
     }
 }
