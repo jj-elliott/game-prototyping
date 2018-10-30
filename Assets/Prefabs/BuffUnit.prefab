@@ -223,7 +223,6 @@ MonoBehaviour:
   meshAgent: {fileID: 0}
   isSelectable: 0
   isSelected: 0
-  bufferOrNot: 0
   MovementSpeed: 0
   UnitWeapon: {fileID: 0}
   homeBase: {fileID: 0}
@@ -235,7 +234,7 @@ SphereCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1046373427399792}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 5
