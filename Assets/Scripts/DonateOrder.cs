@@ -5,7 +5,7 @@ using UnityEngine;
 public class DonateOrder : Order {
 
     static float stopDistance = 5.0f;
-    private UnitProducer prod;
+    public UnitProducer prod;
     Vector3 targetLocation;
 
     public DonateOrder(UnitProducer prod)
@@ -32,6 +32,7 @@ public class DonateOrder : Order {
                     capturablePro.UpdateEnemyCaptureProgress(0.1f);
             }
             UnitCombat unit = sel.transform.GetComponentInChildren<UnitCombat>();
+            if(unit)
             unit.Damage(1000);
             return true;
         }

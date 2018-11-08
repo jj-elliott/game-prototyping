@@ -13,7 +13,18 @@ public class Selectable : MonoBehaviour {
     public bool idle { get { return orderQueue.Count == 0; } }
     public bool isSelectable = false;
     public bool isSelected = false;
-
+    public bool isAttacking
+    {
+        get
+        {
+            var order = orderQueue.Peek();
+            if(order == null || order as AttackOrder == null)
+            {
+                return false;
+            }
+            return true;
+        }
+    }
     // Use this for initialization
     public virtual void Start () {
         if (orderQueue == null)
@@ -69,6 +80,15 @@ public class Selectable : MonoBehaviour {
         foreach(var o in existingOrders)
         {
             orderQueue.Enqueue(order);
+        }
+    }
+
+    public void SetTeam(int index)
+    {
+        TeamIndex = index;
+        foreach(var rend in GetComponentsInChildren<Renderer>())
+        {
+            rend.material.color = SelectionManager.instance.teamColors[TeamIndex];
         }
     }
 }

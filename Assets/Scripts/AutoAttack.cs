@@ -18,10 +18,11 @@ public class AutoAttack : MonoBehaviour {
 
     private void OnTriggerEnter(Collider other)
     {
-        UnitBase combat = other.GetComponent<UnitBase>();
+        UnitCombat combat = other.GetComponent<UnitCombat>();
 
         if(combat != null && combat.TeamIndex != unit.TeamIndex)
         {
+            if(!unit.isAttacking)
             unit.PreemptOrder(new AttackOrder(other.transform));
         }
     }

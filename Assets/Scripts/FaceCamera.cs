@@ -14,7 +14,8 @@ public class FaceCamera : MonoBehaviour {
 	void Update () {
 		if(cam != null)
         {
-            transform.forward = (transform.position - cam.transform.position).normalized;
+            var vec = (transform.position - cam.transform.position).normalized;
+            transform.forward = (vec - Vector3.up * Vector3.Dot(vec , Vector3.up)).normalized;
         }
 	}
 }

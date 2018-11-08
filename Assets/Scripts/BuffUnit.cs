@@ -5,11 +5,12 @@ using UnityEngine;
 public class BuffUnit : UnitBase 
 {
     public float SearchRadius = 15;
-
+    private List<GameObject> buffedUnits;
     // Use this for initialization
     public override void Start()
     {
         base.Start();
+        buffedUnits = new List<GameObject>();
     }
 
     // Update is called once per frame
@@ -21,16 +22,37 @@ public class BuffUnit : UnitBase
 
     public void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.GetComponent<Selectable>().TeamIndex == this.TeamIndex)
+        var sel = other.gameObject.GetComponent<Selectable>();
+        if (sel != null && sel.TeamIndex == this.TeamIndex)
         {
-            other.gameObject.GetComponent<UnitCombat>().buffUnit();
+            var combat = other.gameObject.GetComponent<UnitCombat>();
+            if(combat != null)
+            {
+                buffedUnits.Add(combat.gameObject);
+            combat.buffUnit();
+            }
         }
     }
     public void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.GetComponent<Selectable>().TeamIndex == this.TeamIndex)
+        var sel = other.gameObject.GetComponent<Selectable>();
+        if (sel != null && sel.TeamIndex == this.TeamIndex)
         {
-            other.gameObject.GetComponent<UnitCombat>().debuffUnit();
+            var combat = other.gameObject.GetComponent<UnitCombat>();
+            if (combat != null)
+            {
+                buffedUnits.Remove(combat.gameObject);
+                combat.debuffUnit();
+            }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach(var unit in buffedUnits)
+        {
+            if(unit)
+            unit.GetComponent<UnitCombat>().debuffUnit();
         }
     }
 }

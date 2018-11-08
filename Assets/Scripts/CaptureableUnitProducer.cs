@@ -15,23 +15,17 @@ public class CaptureableUnitProducer : UnitProducer
     public OnPlayerCaptureProgressEvent OnPlayerCaptureProgress;
     public OnEnemyCaptureProgressEvent OnEnemyCaptureProgress;
     public Text captureText;
-    [SerializeField]
-    public Material playerUnitMaterial;
-    [SerializeField]
-    public Material enemyUnitMaterial;
-    [SerializeField]
-    public Material neutralUnitMaterial;
     protected float playerCaptureProgress = 0.0f;
     protected float enemyCaptureProgress = 0.0f;
-    [SerializeField]
-    public GameObject enemyPrefab;
-
+    public GameObject playerCaptureBar, enemyCaptureBar;
 	// Use this for initialization
 	public override void Start ()
     {
         base.Start();
-        convertable = true;   
-	}
+        convertable = true;
+        playerCaptureBar.SetActive(false);
+        enemyCaptureBar.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	protected override void Update ()
@@ -51,42 +45,20 @@ public class CaptureableUnitProducer : UnitProducer
         if (playerCaptureProgress == 1.0f)
         {
             TeamIndex = 0;
-            gameObject.GetComponent<Renderer>().material = playerUnitMaterial;
+            gameObject.GetComponent<Renderer>().material.color = SelectionManager.instance.teamColors[TeamIndex];
             captureText.text = "";
 
         }
         else if (enemyCaptureProgress == 1.0f)
         {
             TeamIndex = 1;
-            gameObject.GetComponent<Renderer>().material = enemyUnitMaterial;
+            gameObject.GetComponent<Renderer>().material.color = SelectionManager.instance.teamColors[TeamIndex];
             captureText.text = "";
         }
         else
         {
             TeamIndex = -1;
-            gameObject.GetComponent<Renderer>().material = neutralUnitMaterial;
-        }
-    }
-
-    protected override void SpawnUnit()
-    {
-        if (TeamIndex == 0)
-        {
-            Selectable spawned = Instantiate(unitPrefab, spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
-            spawned.Start();
-            ((UnitBase)spawned).homeBase = this;
-            if (standingOrder != null)
-                spawned.SetOrder(standingOrder);
-
-        }
-        else if (TeamIndex == 1)
-        {
-            Selectable spawned = Instantiate(enemyPrefab, spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
-            spawned.Start();
-            ((UnitBase)spawned).homeBase = this;
-            if (standingOrder != null)
-                spawned.SetOrder(standingOrder);
-
+            gameObject.GetComponent<Renderer>().material.color = Color.white;
         }
     }
 
@@ -97,12 +69,17 @@ public class CaptureableUnitProducer : UnitProducer
             enemyCaptureProgress -= captureValue;
             enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
             captureText.text = "Player is capturing factory";
+            playerCaptureBar.SetActive(false);
+            enemyCaptureBar.SetActive(true);
+
         }
         else if (playerCaptureProgress < 1.0f)
         {
             playerCaptureProgress += captureValue;
             playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
             captureText.text = "Player is capturing factory";
+            playerCaptureBar.SetActive(true);
+            enemyCaptureBar.SetActive(false);
         }
     }
 
@@ -113,12 +90,16 @@ public class CaptureableUnitProducer : UnitProducer
             playerCaptureProgress -= captureValue;
             playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
             captureText.text = "Enemy is capturing factory";
+            playerCaptureBar.SetActive(true);
+            enemyCaptureBar.SetActive(false);
         }
         else if (enemyCaptureProgress < 1.0f)
         {
             enemyCaptureProgress += captureValue;
             enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
             captureText.text = "Enemy is capturing factory";
+            playerCaptureBar.SetActive(false);
+            enemyCaptureBar.SetActive(true);
         }
     }
 }

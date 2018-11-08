@@ -25,8 +25,11 @@ public class UnitCombat : MonoBehaviour {
     [SerializeField]
     protected UnitBase unit;
 
-    public int isBuffed = 0;
+    [SerializeField]
+    ParticleSystem buffParticles;
 
+    public int isBuffed = 0;
+    public int TeamIndex { get { return unit.TeamIndex; } }
     // Use this for initialization
     protected virtual void Start()
     {
@@ -34,12 +37,19 @@ public class UnitCombat : MonoBehaviour {
         {
             unit = GetComponentInParent<UnitBase>();
         }
+        buffParticles = GetComponent<ParticleSystem>();
         CurrentHealth = MaxHealth;
     }
 
     // Update is called once per frame
     void Update () {
-		
+		if(isBuffed > 0 && !buffParticles.isPlaying)
+        {
+            buffParticles.Play();
+        } else if (isBuffed == 0)
+        {
+            buffParticles.Stop();
+        }
 	}
 
     public void Damage(float ammount)

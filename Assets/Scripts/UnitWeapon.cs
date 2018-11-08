@@ -38,7 +38,7 @@ public abstract class UnitWeapon : MonoBehaviour
         }
 	}
 
-    protected virtual bool CanFire(Vector3 targetPos)
+    public virtual bool CanFire(Vector3 targetPos)
     {
         if (unit != null)
         {

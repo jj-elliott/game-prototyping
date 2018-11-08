@@ -35,7 +35,7 @@ public class AttackOrder : Order
         location = targetCombat.transform.position;
         unit.SetWeaponTarget(target);
         float distToTarget = (target.position - sel.transform.position).magnitude;
-        if (distToTarget < weap.MaxRange)
+        if (distToTarget < weap.MaxRange && weap.CanFire(target.position))
         {
             //Don't move any closer
             sel.SetNavTarget(sel.transform.position);

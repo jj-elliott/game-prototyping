@@ -35,6 +35,19 @@ public class EnemyAIStrategy : MonoBehaviour {
 
         foreach (var factory in ownedFactories)
         {
+            if(factory.standingOrder != null && factory.standingOrder as DonateOrder != null)
+            {
+                var donation = factory.standingOrder as DonateOrder;
+                if(donation.prod.TeamIndex == 1)
+                {
+                    factory.standingOrder = null;
+                }
+            }
+
+            if(factory.standingOrder != null)
+            {
+                continue;
+            }
             if(neutralFactories.Count > 0)
             {
                 UnitProducer closest = null;

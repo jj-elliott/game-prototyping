@@ -9,7 +9,7 @@ public class SelectionManager : MonoBehaviour {
     List<Selectable> currentSelection;
     Dictionary<int, List<Selectable>> teamUnits;
     public int TeamIndex;
-
+    public Color[] teamColors = { Color.cyan , Color.red};
     // Use this for initialization
 
     private void Init()
@@ -100,6 +100,7 @@ public class SelectionManager : MonoBehaviour {
         {
             sel.SetOrder(order);
         }
+        ClearSelection();
     }
 
     public void AddOrder(Order order)

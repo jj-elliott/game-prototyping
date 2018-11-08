@@ -15,17 +15,33 @@ public class Projectile : MonoBehaviour {
     float Lifetime = 5f;
 
     [SerializeField]
+    float Magnetism = 500f;
+
+    [SerializeField]
     UnityEvent OnImpact;
 
     Collider col;
     Rigidbody rigid;
     UnitCombat owner;
-
+    Transform target;
+    Vector3 vecToTarget { get { return (target.position - transform.position).normalized; } }
+    Vector3 startPos;
     private void Start()
     {
         
     }
 
+    public void Update()
+    {
+        if (rigid)
+        {
+            if (target)
+            {
+                Vector3 deviation = (rigid.velocity - vecToTarget * Vector3.Dot(rigid.velocity, vecToTarget)).normalized;
+                rigid.AddForce((vecToTarget - deviation) * Magnetism);
+            }
+        }
+    }
     public IEnumerator EnableCollider()
     {
         yield return new WaitForSeconds(ArmingTime);
@@ -38,10 +54,16 @@ public class Projectile : MonoBehaviour {
         Destroy(gameObject);
     }
 
-    public void Fire(Vector3 force, UnitCombat owner)
+    public void Fire(Transform target, UnitCombat owner)
     {
         col = GetComponent<Collider>();
         rigid = GetComponent<Rigidbody>();
+        var rend = GetComponent<Renderer>();
+        var trail = GetComponent<TrailRenderer>();
+        this.target = target;
+        rend.material.color = SelectionManager.instance.teamColors[owner.TeamIndex];
+        trail.startColor = trail.endColor = SelectionManager.instance.teamColors[owner.TeamIndex];
+        startPos = transform.position;
         this.owner = owner;
         col.enabled = false;
         if (ArmingTime == 0)
@@ -51,7 +73,8 @@ public class Projectile : MonoBehaviour {
         {
             StartCoroutine(EnableCollider());
         }
-        rigid.AddForce(force);
+        rigid.AddForce(vecToTarget * 10 * Magnetism);
+        rigid.useGravity = false;
         StartCoroutine(SelfDestruct());
     }
 
@@ -74,6 +97,14 @@ public class Projectile : MonoBehaviour {
             else
             {
                 combat.Damage(Damage);
+            }
+        } else
+        {
+            var parentComb = hitObj.parent.gameObject.GetComponent<ShieldUnit>();
+            if (parentComb != null && (parentComb.TeamIndex == owner.TeamIndex || (parentComb.transform.position - startPos).magnitude < parentComb.Radius))
+            {
+                Physics.IgnoreCollision(collision.collider, col, true);
+                return;
             }
         }
         if(OnImpact != null)

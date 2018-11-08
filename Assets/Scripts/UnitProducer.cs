@@ -45,7 +45,7 @@ public class UnitProducer : UnitBase
 
         if (TeamIndex >= 0)
         {
-            productionText.text = "Building: " + unitPrefab.name;
+            productionText.text = "Building " + unitPrefab.name;
 
             buildProgress += Time.deltaTime / buildTime;
             buildProgress = Mathf.Clamp01(buildProgress);
@@ -63,7 +63,7 @@ public class UnitProducer : UnitBase
         }
         else
         {
-            productionText.text = "";
+            productionText.text = unitPrefab.name;
         }
     }
 
@@ -75,6 +75,7 @@ public class UnitProducer : UnitBase
     protected virtual void SpawnUnit()
     {
         Selectable spawned = Instantiate(unitPrefab, spawnLocation.position, Quaternion.identity).GetComponent<Selectable>();
+        spawned.SetTeam(TeamIndex);
         spawned.Start();
         ((UnitBase)spawned).homeBase = this;
         if(standingOrder != null)
