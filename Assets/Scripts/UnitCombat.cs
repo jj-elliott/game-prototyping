@@ -70,6 +70,38 @@ public class UnitCombat : MonoBehaviour {
             if(OnDeath != null)
             {
                 OnDeath.Invoke();
+                if(unit.TeamIndex == 1){
+                    foreach (var factory in UnitProducer.FactoryList)
+                    {
+                        if ((factory.TeamIndex != unit.TeamIndex) && (!factory.convertable))
+                        {
+                            factory.GetComponent<UnitCombat>().recoverHealth(10.0f);
+                        }
+                    }
+                }
+            }
+            Destroy(unit.gameObject);
+        }
+    }
+    //for donate order
+    public void selfDamage(float ammount)
+    {
+        CurrentHealth -= ammount;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+
+        if (OnDamage != null)
+        {
+            OnDamage.Invoke(ammount);
+        }
+        if (OnHealthChanged != null)
+        {
+            OnHealthChanged.Invoke(CurrentHealth / MaxHealth);
+        }
+        if (CurrentHealth == 0)
+        {
+            if (OnDeath != null)
+            {
+                OnDeath.Invoke();
             }
             Destroy(unit.gameObject);
         }
@@ -84,5 +116,9 @@ public class UnitCombat : MonoBehaviour {
     {
         isBuffed = 0;
         print("debuffed");
+    }
+    public void recoverHealth(float healAmount) {
+        CurrentHealth += healAmount;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
     }
 }
