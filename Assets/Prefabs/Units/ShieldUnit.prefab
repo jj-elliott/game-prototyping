@@ -106,7 +106,7 @@ Transform:
   m_GameObject: {fileID: 1046373427399792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -138.6454, y: -0.92999995, z: -167.22733}
-  m_LocalScale: {x: 0.02245717, y: 0.01195259, z: 0.02319649}
+  m_LocalScale: {x: 2.245717, y: 1.1952591, z: 2.3196492}
   m_Children:
   - {fileID: 4479692148472832}
   - {fileID: 4015342491118360}
@@ -297,9 +297,8 @@ MonoBehaviour:
   MovementSpeed: 0
   UnitWeapon: {fileID: 0}
   homeBase: {fileID: 0}
-  canDonate: 0
-  buildTime: 40
-  Radius: 35
+  MaxRadius: 35
+  MinRadius: 15
   shieldTrans: {fileID: 0}
 --- !u!114 &114273970740452250
 MonoBehaviour:
@@ -312,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40ffeeab2a0e6bb47965d4a6918d834b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth: 750
+  MaxHealth: 75
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
@@ -325,7 +324,18 @@ MonoBehaviour:
       PublicKeyToken=null
   OnHealthChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 114265933746437250}
+        m_MethodName: OnHealthChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: HealthChangedEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral,
       PublicKeyToken=null
   unit: {fileID: 0}
@@ -381,7 +391,7 @@ NavMeshAgent:
   m_Acceleration: 25
   avoidancePriority: 50
   m_AngularSpeed: 400
-  m_StoppingDistance: 0.01
+  m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

@@ -33,7 +33,7 @@ public class DonateOrder : Order {
             }
             UnitCombat unit = sel.transform.GetComponentInChildren<UnitCombat>();
             if(unit)
-            unit.Damage(1000);
+            unit.selfDamage(1000);
             return true;
         }
         return false;
