@@ -10,7 +10,7 @@ using UnityEngine.UI;
 //[System.Serializable]
 //public class OnEnemyCaptureProgressEvent : UnityEvent<float> { };
  
-public class FaceLazerCharger : UnitBase
+public class FaceLazerCharger : UnitProducer
 {
     public OnPlayerCaptureProgressEvent OnPlayerCaptureProgress;
     public OnEnemyCaptureProgressEvent OnEnemyCaptureProgress;
@@ -18,6 +18,7 @@ public class FaceLazerCharger : UnitBase
     public bool convertable;
     protected float playerCaptureProgress = 0.0f;
     protected float enemyCaptureProgress = 0.0f;
+    protected bool lazerReady = false;
     public GameObject playerCaptureBar, enemyCaptureBar;
 	// Use this for initialization
 	public override void Start ()
@@ -27,11 +28,40 @@ public class FaceLazerCharger : UnitBase
         playerCaptureBar.SetActive(false);
         enemyCaptureBar.SetActive(false);
     }
-	
-	// Update is called once per frame
-	protected override void Update ()
+
+
+    private void setLazerReady()
     {
-        base.Update();
+        lazerReady = false;
+        //need to update GUI to indicate lazer ready
+    }
+
+    // Update is called once per frame
+    protected override void Update ()
+    {
+        //base.Update();
+        if (TeamIndex >= 0)
+        {
+            productionText.text = "Charging " + unitPrefab.name;
+
+            buildProgress += Time.deltaTime / buildTime;
+            buildProgress = Mathf.Clamp01(buildProgress);
+
+            if (OnBuildProgress != null)
+            {
+                OnBuildProgress.Invoke(buildProgress);
+            }
+
+            if (buildProgress >= 1.0f)
+            {
+                setLazerReady();
+                buildProgress = 0.0f;
+            }
+        }
+        else
+        {
+            productionText.text = unitPrefab.name;
+        }
 
         if (OnPlayerCaptureProgress != null)
         {
@@ -61,6 +91,8 @@ public class FaceLazerCharger : UnitBase
             TeamIndex = -1;
             gameObject.GetComponent<Renderer>().material.color = Color.white;
         }
+
+
     }
 
     public void UpdatePlayerCaptureProgress(float captureValue)
