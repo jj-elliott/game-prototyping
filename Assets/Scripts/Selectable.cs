@@ -88,7 +88,10 @@ public class Selectable : MonoBehaviour {
         TeamIndex = index;
         foreach(var rend in GetComponentsInChildren<Renderer>())
         {
-            rend.material.color = SelectionManager.instance.teamColors[TeamIndex];
+            if (TeamIndex != -1)
+                rend.material.color = SelectionManager.instance.teamColors[TeamIndex];
+            else
+                rend.material.color = Color.white;
         }
     }
 }

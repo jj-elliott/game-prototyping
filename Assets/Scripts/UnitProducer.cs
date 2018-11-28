@@ -10,8 +10,8 @@ public class OnBuildProgressEvent : UnityEvent<float> { };
 public class UnitProducer : UnitBase
 {
     [SerializeField]
-    public GameObject unitPrefab;
-    public float buildTime;
+    public UnitBase unitPrefab;
+    new public float buildTime { get { return unitPrefab.buildTime; } }
     public Transform spawnLocation;
     public OnBuildProgressEvent OnBuildProgress;
     public Text productionText;
@@ -20,7 +20,7 @@ public class UnitProducer : UnitBase
     public bool convertable;
     protected float buildProgress;
     public static List<UnitProducer> FactoryList;
-
+    public bool canBuild = true;
 
     public override void Start()
     {
@@ -43,7 +43,7 @@ public class UnitProducer : UnitBase
     {
         base.Update();
 
-        if (TeamIndex >= 0)
+        if (TeamIndex >= 0 && canBuild)
         {
             productionText.text = "Building " + unitPrefab.name;
 
@@ -78,11 +78,8 @@ public class UnitProducer : UnitBase
         spawned.SetTeam(TeamIndex);
         spawned.Start();
         ((UnitBase)spawned).homeBase = this;
-        if(standingOrder != null)
+        if (standingOrder != null)
             spawned.SetOrder(standingOrder);
-
-        //if(Vector3.Distance(this.meshAgent.destination, transform.position) > minRallyDistance)
-        //    spawned.SetOrder(new MoveOrder(this.meshAgent.destination));
     }
 
     public override void SetOrder(Order order)

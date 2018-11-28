@@ -98,6 +98,12 @@ public class SelectionManager : MonoBehaviour {
     {
         foreach(var sel in currentSelection)
         {
+            UnitBase b = sel as UnitBase;
+            DonateOrder d = order as DonateOrder;
+            if (d != null && (b == null || !b.canDonate))
+            {
+                continue;
+            }
             sel.SetOrder(order);
         }
         ClearSelection();
@@ -107,6 +113,12 @@ public class SelectionManager : MonoBehaviour {
     {
         foreach (var sel in currentSelection)
         {
+            UnitBase b = sel as UnitBase;
+            DonateOrder d = order as DonateOrder;
+            if (d != null && (b == null || !b.canDonate))
+            {
+                continue;
+            }
             sel.AddOrder(order);
         }
     }

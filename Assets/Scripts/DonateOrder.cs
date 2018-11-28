@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DonateOrder : Order {
 
-    static float stopDistance = 5.0f;
+    static float stopDistance =.05f;
     public UnitProducer prod;
     Vector3 targetLocation;
 

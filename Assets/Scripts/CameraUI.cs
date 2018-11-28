@@ -9,9 +9,9 @@ public class CameraUI : MonoBehaviour {
     Camera camera;
     Vector2 clickStartPos;
     public float dragThreshold = 5;
-    //UnityEngine.XR.WSA.Input.GestureRecognizer recognizer;
+    UnityEngine.XR.WSA.Input.GestureRecognizer recognizer;
     bool awaitingDoubleTap = false;
-    float doubleTapDelay = 1.0f;
+    float doubleTapDelay = 0.25f;
     public Transform cursor;
     public static CameraUI instance;
     //public GameObject cursorPrefab;
@@ -34,10 +34,10 @@ public class CameraUI : MonoBehaviour {
         }
 
         camera = GetComponent<Camera>();
-        //recognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
-        //recognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
-        //recognizer.TappedEvent += OnAirTap;
-        //recognizer.StartCapturingGestures();
+        recognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
+        recognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
+        recognizer.TappedEvent += OnAirTap;
+        recognizer.StartCapturingGestures();
     }
 	
     void OnLeftClick(Ray ray)
@@ -83,19 +83,20 @@ public class CameraUI : MonoBehaviour {
         }
     }
 
-    //void OnAirTap(UnityEngine.XR.WSA.Input.InteractionSourceKind source, int tapCount, Ray headRay)
-    //{
-        
-    //    if(!awaitingDoubleTap)
-    //    {
-    //        awaitingDoubleTap = true;
-    //        StartCoroutine(DoTap(headRay));
-    //    } else
-    //    {
-    //        print("DoubleTap! ");
-    //        OnRightClick(headRay);
-    //    }
-    //}
+    void OnAirTap(UnityEngine.XR.WSA.Input.InteractionSourceKind source, int tapCount, Ray headRay)
+    {
+
+        if (!awaitingDoubleTap)
+        {
+            awaitingDoubleTap = true;
+            StartCoroutine(DoTap(headRay));
+        }
+        else
+        {
+            print("DoubleTap! ");
+            OnRightClick(headRay);
+        }
+    }
 
     void OnBoxSelect(Vector2 startPos , Vector2 endPos)
     {

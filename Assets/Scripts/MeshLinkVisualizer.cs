@@ -13,7 +13,7 @@ public class MeshLinkVisualizer : MonoBehaviour {
         {
             Gizmos.color = Color.cyan;
             
-            Gizmos.DrawSphere(transform.position , .05f);
+            Gizmos.DrawSphere(transform.position , .005f);
             if(Link.startTransform != null && Link.endTransform != null)
             {
                 Gizmos.color = Color.magenta;

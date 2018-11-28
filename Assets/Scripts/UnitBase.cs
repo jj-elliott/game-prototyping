@@ -8,6 +8,8 @@ public abstract class UnitBase : Selectable
     public UnitWeapon UnitWeapon;
     private Transform weaponTarget;
     public UnitProducer homeBase;
+    public bool canDonate = false;
+    public float buildTime = 25f;
 
     // Use this for initialization
     public override void Start ()

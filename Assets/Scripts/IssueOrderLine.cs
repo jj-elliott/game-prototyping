@@ -6,7 +6,7 @@ public class IssueOrderLine : MonoBehaviour {
 
     LineRenderer line;
     UnitProducer prod;
-
+    public float lineWidth = 0.01f;
 	// Use this for initialization
 	void Start () {
         line = GetComponent<LineRenderer>();
@@ -17,7 +17,7 @@ public class IssueOrderLine : MonoBehaviour {
             var mat = new Material(Shader.Find("Sprites/Default"));
             mat.color = prod.TeamIndex == 0 ? Color.cyan : Color.red;
             line.material = mat;
-            line.startWidth = line.endWidth = 0.1f;
+            line.startWidth = line.endWidth = lineWidth;
         }
 	}
 	
