@@ -12,9 +12,16 @@ public class CameraUI : MonoBehaviour {
     UnityEngine.XR.WSA.Input.GestureRecognizer recognizer;
     bool awaitingDoubleTap = false;
     float doubleTapDelay = 0.25f;
+    float lazerTime = 10.0f;
+    float lazerDamage = 1.0f;
+    float lazerOffset = 0.75f;
+    bool lazersOn = false;
+
+
     public Transform cursor;
     public static CameraUI instance;
     //public GameObject cursorPrefab;
+    LineRenderer[] FaceLazers;
 
     IEnumerator DoTap(Ray input)
     {
@@ -24,6 +31,22 @@ public class CameraUI : MonoBehaviour {
             OnLeftClick(input);
             awaitingDoubleTap = false;
         }
+    }
+
+    public void FireLasers()
+    {
+        FaceLazers[0].enabled = true;
+        FaceLazers[1].enabled = true;
+        lazersOn = true;
+        StartCoroutine(StopLazers());
+    }
+
+    IEnumerator StopLazers()
+    {
+        yield return new WaitForSeconds(lazerTime);
+        FaceLazers[0].enabled = false;
+        FaceLazers[1].enabled = false;
+        lazersOn = false;
     }
 
     // Use this for initialization
@@ -38,6 +61,10 @@ public class CameraUI : MonoBehaviour {
         recognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
         recognizer.TappedEvent += OnAirTap;
         recognizer.StartCapturingGestures();
+        FaceLazers = GetComponentsInChildren<LineRenderer>();
+        FaceLazers[0].enabled = false;
+        FaceLazers[1].enabled = false;
+        lazersOn = false;
     }
 	
     void OnLeftClick(Ray ray)
@@ -85,16 +112,13 @@ public class CameraUI : MonoBehaviour {
 
     void OnAirTap(UnityEngine.XR.WSA.Input.InteractionSourceKind source, int tapCount, Ray headRay)
     {
-
-        if (!awaitingDoubleTap)
+        if (SelectionManager.instance.HasSelection)
         {
-            awaitingDoubleTap = true;
-            StartCoroutine(DoTap(headRay));
+            OnRightClick(headRay);
         }
         else
         {
-            print("DoubleTap! ");
-            OnRightClick(headRay);
+            OnLeftClick(headRay);
         }
     }
 
@@ -157,6 +181,7 @@ public class CameraUI : MonoBehaviour {
 
             else if (prod != null && prod.TeamIndex != SelectionManager.instance.TeamIndex && prod.convertable)
             {
+                print("Issuing donate order");
                 if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
                 {
                     SelectionManager.instance.AddOrder(new DonateOrder(prod));
@@ -193,6 +218,32 @@ public class CameraUI : MonoBehaviour {
         } else
         {
             cursor.position = camera.transform.position + camera.transform.forward * 1000f;
+        }
+
+        if (lazersOn)
+        {
+            FaceLazers[0].SetPosition(0, transform.position - transform.right * lazerOffset);
+            FaceLazers[1].SetPosition(0, transform.position + transform.right * lazerOffset);
+            FaceLazers[0].SetPosition(1, cursor.position);
+            FaceLazers[1].SetPosition(1, cursor.position);
+
+            var hits = Physics.SphereCastAll(camera.transform.position,1, camera.transform.forward, 1000f, LayerMask.GetMask("Units"));
+            foreach(var h in hits)
+            {
+                if (hit.transform)
+                {
+                    UnitCombat comb = h.transform.GetComponent<UnitCombat>();
+                    UnitBase unit = h.transform.GetComponent<UnitBase>();
+
+                    print(hit);
+                    print(comb);
+                    print(unit);
+                    if (unit != null && comb != null && unit.TeamIndex == 1 && unit as UnitProducer == null)
+                    {
+                        comb.Damage(lazerDamage);
+                    }
+                }
+            } 
         }
 
         if (Input.GetMouseButtonDown(0)) // Did the player just click down the left mouse?

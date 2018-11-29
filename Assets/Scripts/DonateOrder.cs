@@ -27,9 +27,9 @@ public class DonateOrder : Order {
             {
                 CaptureableUnitProducer capturablePro = (CaptureableUnitProducer)prod;
                 if (sel.TeamIndex == 0)
-                    capturablePro.UpdatePlayerCaptureProgress(0.1f);
+                    capturablePro.UpdatePlayerCaptureProgress(0.34f);
                 else
-                    capturablePro.UpdateEnemyCaptureProgress(0.1f);
+                    capturablePro.UpdateEnemyCaptureProgress(0.34f);
             }
             UnitCombat unit = sel.transform.GetComponentInChildren<UnitCombat>();
             if(unit)

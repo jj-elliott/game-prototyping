@@ -30,7 +30,7 @@ GameObject:
   - component: {fileID: 199318357316791362}
   - component: {fileID: 114265933746437250}
   m_Layer: 0
-  m_Name: ShieldUnit
+  m_Name: Guardian
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -106,7 +106,7 @@ Transform:
   m_GameObject: {fileID: 1046373427399792}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -138.6454, y: -0.92999995, z: -167.22733}
-  m_LocalScale: {x: 2.245717, y: 1.1952591, z: 2.3196492}
+  m_LocalScale: {x: 0.022, y: 0.0119, z: 0.022}
   m_Children:
   - {fileID: 4479692148472832}
   - {fileID: 4015342491118360}
@@ -297,6 +297,8 @@ MonoBehaviour:
   MovementSpeed: 0
   UnitWeapon: {fileID: 0}
   homeBase: {fileID: 0}
+  canDonate: 0
+  buildTime: 25
   MaxRadius: 35
   MinRadius: 15
   shieldTrans: {fileID: 0}
@@ -387,7 +389,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 25
+  m_Speed: 0.25
   m_Acceleration: 25
   avoidancePriority: 50
   m_AngularSpeed: 400

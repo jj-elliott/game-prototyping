@@ -22,8 +22,16 @@ public class AutoAttack : MonoBehaviour {
 
         if(combat != null && combat.TeamIndex != unit.TeamIndex)
         {
-            if(!unit.isAttacking)
-            unit.PreemptOrder(new AttackOrder(other.transform));
+            if (!unit.isAttacking)
+            {
+                ArtilleryUnit au = unit as ArtilleryUnit;
+                ShieldUnit su = combat.gameObject.GetComponent<ShieldUnit>();
+                if(au != null && su != null)
+                {
+                    return;
+                }
+                unit.PreemptOrder(new AttackOrder(other.transform));
+            }
         }
     }
 }

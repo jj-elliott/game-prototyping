@@ -142,5 +142,6 @@ public class CaptureableUnitProducer : UnitProducer
         if (standingOrder != null)
             spawned.SetOrder(standingOrder);
         canBuild = false;
+        activeUnit = spawned as UnitBase;
     }
 }

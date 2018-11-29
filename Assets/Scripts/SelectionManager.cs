@@ -11,6 +11,7 @@ public class SelectionManager : MonoBehaviour {
     public int TeamIndex;
     public Color[] teamColors = { Color.cyan , Color.red};
     // Use this for initialization
+    public bool HasSelection { get { return currentSelection.Count > 0; } }
 
     private void Init()
     {

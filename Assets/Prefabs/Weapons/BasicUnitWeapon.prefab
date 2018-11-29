@@ -51,12 +51,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 186426c0e6d234d43aa1206f9385ada9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxRange: 25
+  MaxRange: 0.1
   MinRange: 0
   ProjectilePrefab: {fileID: 1523255989571376, guid: ec526e37e76194598a1272957598d0cc,
     type: 2}
   unit: {fileID: 0}
   LaunchForce: 15
   CooldownTime: 1
-  offset: 1
-  allowedRadiusLOSCheck: 5
+  offset: 0.0001
+  allowedRadiusLOSCheck: 0.005

@@ -35,7 +35,16 @@ public class AttackOrder : Order
         location = targetCombat.transform.position;
         unit.SetWeaponTarget(target);
         float distToTarget = (target.position - sel.transform.position).magnitude;
-        if (distToTarget < weap.MaxRange && weap.CanFire(target.position))
+
+        ProjectileWeapon pw = weap as ProjectileWeapon;
+        bool canSee = true;
+
+        if(pw != null)
+        {
+            canSee = pw.CanSee(target.position);
+        }
+
+        if (distToTarget < weap.MaxRange && canSee)
         {
             //Don't move any closer
             sel.SetNavTarget(sel.transform.position);

@@ -11,7 +11,7 @@ public class ProjectileWeapon : UnitWeapon
     float CooldownTime;
 
     [SerializeField]
-    float offset = 1, allowedRadiusLOSCheck = 5;
+    float offset = 0.001f, allowedRadiusLOSCheck = 5;
     UnitCombat combat;
 
     protected override void Start()
@@ -53,7 +53,7 @@ public class ProjectileWeapon : UnitWeapon
         StartCoroutine(Reload());
     }
 
-    public override bool CanFire(Vector3 targetPos)
+    public bool CanSee(Vector3 targetPos)
     {
         RaycastHit hit;
         Vector3 vecToTarget = (targetPos - transform.parent.position).normalized;
@@ -65,7 +65,14 @@ public class ProjectileWeapon : UnitWeapon
         {
             return false;
         }
-        return base.CanFire(targetPos) && !onCooldown && (hit.transform.position - targetPos).magnitude < allowedRadiusLOSCheck;
-    }
+        return (hit.transform.position - targetPos).magnitude < allowedRadiusLOSCheck;
+   }
+
+public override bool CanFire(Vector3 targetPos)
+{
+
+    return base.CanFire(targetPos) && !onCooldown && CanSee(targetPos);
+}
+
 }
 

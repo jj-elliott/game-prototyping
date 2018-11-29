@@ -15,25 +15,32 @@ public class FaceLazerCharger : UnitProducer
     public OnPlayerCaptureProgressEvent OnPlayerCaptureProgress;
     public OnEnemyCaptureProgressEvent OnEnemyCaptureProgress;
     public Text captureText;
-    public bool convertable;
     protected float playerCaptureProgress = 0.0f;
     protected float enemyCaptureProgress = 0.0f;
     protected bool lazerReady = false;
+    new float buildTime = 60f;
     public GameObject playerCaptureBar, enemyCaptureBar;
 	// Use this for initialization
 	public override void Start ()
     {
         base.Start();
         convertable = true;
-        playerCaptureBar.SetActive(false);
-        enemyCaptureBar.SetActive(false);
+        TeamIndex = 0;
+        gameObject.GetComponent<Renderer>().material.color = SelectionManager.instance.teamColors[TeamIndex];
     }
 
 
     private void setLazerReady()
     {
-        lazerReady = false;
+        lazerReady = true;
+        productionText.text = "FaceLazer ready";
         //need to update GUI to indicate lazer ready
+    }
+
+    public void UseLazer()
+    {
+        lazerReady = false;
+        buildProgress = 0;
     }
 
     // Update is called once per frame
@@ -42,7 +49,7 @@ public class FaceLazerCharger : UnitProducer
         //base.Update();
         if (TeamIndex >= 0)
         {
-            productionText.text = "Charging " + unitPrefab.name;
+            productionText.text = "Charging FaceLazer";
 
             buildProgress += Time.deltaTime / buildTime;
             buildProgress = Mathf.Clamp01(buildProgress);
@@ -55,44 +62,8 @@ public class FaceLazerCharger : UnitProducer
             if (buildProgress >= 1.0f)
             {
                 setLazerReady();
-                buildProgress = 0.0f;
             }
         }
-        else
-        {
-            productionText.text = unitPrefab.name;
-        }
-
-        if (OnPlayerCaptureProgress != null)
-        {
-            OnPlayerCaptureProgress.Invoke(playerCaptureProgress);
-        }
-
-        if (OnEnemyCaptureProgress != null)
-        {
-            OnEnemyCaptureProgress.Invoke(enemyCaptureProgress);
-        }
-
-        if (playerCaptureProgress == 1.0f)
-        {
-            TeamIndex = 0;
-            gameObject.GetComponent<Renderer>().material.color = SelectionManager.instance.teamColors[TeamIndex];
-            captureText.text = "";
-
-        }
-        else if (enemyCaptureProgress == 1.0f)
-        {
-            TeamIndex = 1;
-            gameObject.GetComponent<Renderer>().material.color = SelectionManager.instance.teamColors[TeamIndex];
-            captureText.text = "";
-        }
-        else
-        {
-            TeamIndex = -1;
-            gameObject.GetComponent<Renderer>().material.color = Color.white;
-        }
-
-
     }
 
     public void UpdatePlayerCaptureProgress(float captureValue)
@@ -101,7 +72,7 @@ public class FaceLazerCharger : UnitProducer
         {
             enemyCaptureProgress -= captureValue;
             enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
-            captureText.text = "Player is capturing factory";
+            captureText.text = "Player is capturing FaceLazer";
             playerCaptureBar.SetActive(false);
             enemyCaptureBar.SetActive(true);
 
@@ -110,7 +81,7 @@ public class FaceLazerCharger : UnitProducer
         {
             playerCaptureProgress += captureValue;
             playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
-            captureText.text = "Player is capturing factory";
+            captureText.text = "Player is capturing FaceLazer";
             playerCaptureBar.SetActive(true);
             enemyCaptureBar.SetActive(false);
         }
@@ -122,7 +93,7 @@ public class FaceLazerCharger : UnitProducer
         {
             playerCaptureProgress -= captureValue;
             playerCaptureProgress = Mathf.Clamp01(playerCaptureProgress);
-            captureText.text = "Enemy is capturing factory";
+            captureText.text = "Enemy is capturing FaceLazer";
             playerCaptureBar.SetActive(true);
             enemyCaptureBar.SetActive(false);
         }
@@ -130,9 +101,17 @@ public class FaceLazerCharger : UnitProducer
         {
             enemyCaptureProgress += captureValue;
             enemyCaptureProgress = Mathf.Clamp01(enemyCaptureProgress);
-            captureText.text = "Enemy is capturing factory";
+            captureText.text = "Enemy is capturing FaceLazer";
             playerCaptureBar.SetActive(false);
             enemyCaptureBar.SetActive(true);
+        }
+    }
+
+    public override void SetOrder(Order order)
+    {
+        if(lazerReady)
+        {
+            CameraUI.instance.FireLasers();
         }
     }
 }

@@ -70,12 +70,19 @@ public class UnitCombat : MonoBehaviour {
             if(OnDeath != null)
             {
                 OnDeath.Invoke();
+                if (unit == null)
+                    return;
                 if(unit.TeamIndex == 1){
                     foreach (var factory in UnitProducer.FactoryList)
                     {
                         if ((factory.TeamIndex != unit.TeamIndex) && (!factory.convertable))
                         {
-                            factory.GetComponent<UnitCombat>().recoverHealth(10.0f);
+                            UnitCombat comb = factory.GetComponent<UnitCombat>();
+                            if(comb == null)
+                            {
+                                continue;
+                            }
+                            comb.recoverHealth(10.0f);
                         }
                     }
                 }
