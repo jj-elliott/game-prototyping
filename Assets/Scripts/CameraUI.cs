@@ -13,10 +13,11 @@ public class CameraUI : MonoBehaviour {
     bool awaitingDoubleTap = false;
     float doubleTapDelay = 0.25f;
     float lazerTime = 10.0f;
-    float lazerDamage = 1.0f;
+    float lazerDamage = 10.0f;
     float lazerOffset = 0.75f;
     bool lazersOn = false;
-
+    public GameObject lazerExplosion;
+    int perframes = 5 , count = 0;
 
     public Transform cursor;
     public static CameraUI instance;
@@ -55,7 +56,6 @@ public class CameraUI : MonoBehaviour {
         {
             instance = this;
         }
-
         camera = GetComponent<Camera>();
         recognizer = new UnityEngine.XR.WSA.Input.GestureRecognizer();
         recognizer.SetRecognizableGestures(UnityEngine.XR.WSA.Input.GestureSettings.Tap);
@@ -226,6 +226,11 @@ public class CameraUI : MonoBehaviour {
             FaceLazers[1].SetPosition(0, transform.position + transform.right * lazerOffset);
             FaceLazers[0].SetPosition(1, cursor.position);
             FaceLazers[1].SetPosition(1, cursor.position);
+
+            if(count++ % perframes == 0)
+            {
+                Instantiate(lazerExplosion, cursor.position, Quaternion.identity);
+            }
 
             var hits = Physics.SphereCastAll(camera.transform.position,1, camera.transform.forward, 1000f, LayerMask.GetMask("Units"));
             foreach(var h in hits)

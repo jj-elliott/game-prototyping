@@ -20,6 +20,9 @@ public class Projectile : MonoBehaviour {
     [SerializeField]
     UnityEvent OnImpact;
 
+    [SerializeField]
+    GameObject explosionPrefab;
+
     Collider col;
     Rigidbody rigid;
     UnitCombat owner;
@@ -111,6 +114,12 @@ public class Projectile : MonoBehaviour {
         {
             OnImpact.Invoke();
         }
+
+        if(explosionPrefab != null)
+        {
+            var obj = Instantiate(explosionPrefab , transform.position, Quaternion.identity) as GameObject;
+        }
+
         Destroy(gameObject);
     }
 }
